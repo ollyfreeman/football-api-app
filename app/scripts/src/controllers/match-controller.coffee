@@ -1,8 +1,8 @@
-app = angular.module('footballAPI')
+angular.module 'footballAPI'
 
 # SPLIT THIS INTO A Matches, Graph and Table ctrl - all share the same data object (which is init by dataFetcher, which the MatchesController accesses)
 # exposed get (and set) methods on the data object to keep things tight
-.controller('MatchController', ['DataService', '$http', '$interval', (DataService, $http, $interval) ->
+.controller('MatchController', ['DataService', '$http', '$interval', 'DATA', 'GRAPH', 'TIME', (DataService, $http, $interval, DATA, GRAPH, TIME) ->
 
     ctrl = this
     ctrl.simulationReady = false
@@ -10,15 +10,13 @@ app = angular.module('footballAPI')
     ctrl.matchSpeed = 200
 
     ctrl.matches = []
-    ctrl.events = []
+    ctrl.globalEvents = []
     ctrl.predictions = []
     ctrl.predictionTooltips = {}
     ctrl.eventTooltips = {}
     ctrl.playerScore = []
     ctrl.graphData = []
     ctrl.graphLabels = []
-
-    SIXTY_SECONDS = 60000
 
     DataService.getInitalMatchInfo().then () ->
         initaliseMatches()
@@ -34,14 +32,14 @@ app = angular.module('footballAPI')
         console.log(':(')
 
     ctrl.startSimulation = () ->
-        lengthOfSimulatedMinute = SIXTY_SECONDS/ctrl.matchSpeed
+        lengthOfSimulatedMinute = TIME.SIXTY_SECONDS/ctrl.matchSpeed
 
         DataService.startMatch(ctrl.matchSpeed).then () ->
             # execute this once per simulated minute
             intervalId = newInterval(lengthOfSimulatedMinute, () ->
 
                 # finish the simulation if full time is reached
-                finishSimulation(intervalId) if ctrl.simulationTime >=106
+                finishSimulation(intervalId) if ctrl.simulationTime >= TIME.SECONDHALF_END
 
                 # TODO: go onto 1 second poll if we are ahead of the server
 
@@ -56,9 +54,6 @@ app = angular.module('footballAPI')
 
                 # calculate the playerScore
                 calculatePlayerScore()
-
-                console.log(ctrl.predictionTooltips)
-                console.log(ctrl.eventTooltips)
 
                 # increase the simulation time
                 ctrl.simulationTime += 1
@@ -78,30 +73,30 @@ app = angular.module('footballAPI')
         ctrl.matches = DataService.matches
 
     initaliseEvents = () ->
-        ctrl.events = DataService.events
+        ctrl.globalEvents = DataService.globalEvents
 
     initialisePredictions = () ->
         for match in ctrl.matches
-            ctrl.predictions.push({ current: 'draw', lastChange: 0, list: ['draw'] })
+            ctrl.predictions.push({ current: DATA.DRAW, lastChange: TIME.FIRSTHALF_START, list: [DATA.DRAW] })
 
     initialisePredictionTooltips = () ->
-        ctrl.predictionTooltips.list = (null for [0..106])
+        ctrl.predictionTooltips.list = (null for [TIME.FIRSTHALF_START..TIME.SECONDHALF_END])
         ctrl.predictionTooltips.mostRecent = (null for match in ctrl.matches)
 
     initialiseEventTooltips = () ->
-        ctrl.eventTooltips.list = (null for [0..106])
+        ctrl.eventTooltips.list = (null for [TIME.FIRSTHALF_START..TIME.SECONDHALF_END])
 
     initialisePlayerScore = () ->
-        ctrl.playerScore = (0 for [0..106])
+        ctrl.playerScore = (0 for [TIME.FIRSTHALF_START..TIME.SECONDHALF_END])
 
     initialiseGraphData = () ->
         ctrl.graphData.push(ctrl.playerScore)
 
     initialiseGraphLabels = () ->
-        ctrl.graphLabels.push('') for i in [0..106] by 1
-        ctrl.graphLabels[i] = "#{i}FH" for i in[0..44] by 5
-        ctrl.graphLabels[i] = "#{i-46}HT" for i in[46..60] by 5
-        ctrl.graphLabels[i] = "#{i-16}SH" for i in[61..106] by 5
+        ctrl.graphLabels.push('') for i in [TIME.FIRSTHALF_START..TIME.SECONDHALF_END]
+        ctrl.graphLabels[i] = "#{i}FH" for i in[TIME.FIRSTHALF_START..TIME.FIRSTHALF_END - 1] by GRAPH.LABEL_GAP
+        ctrl.graphLabels[i] = "#{i-TIME.HALFTIME_START}HT" for i in[TIME.HALFTIME_START..TIME.HALFTIME_END] by GRAPH.LABEL_GAP
+        ctrl.graphLabels[i] = "#{i-(TIME.SECONDHALF_START-TIME.FIRSTHALF_END)}SH" for i in[TIME.SECONDHALF_START..TIME.SECONDHALF_END] by GRAPH.LABEL_GAP
 
 
     ###
@@ -116,26 +111,29 @@ app = angular.module('footballAPI')
         console.log 'Match Finished.'
 
     addEventTooltip = () ->
-        if ctrl.events[ctrl.simulationTime]
+        if ctrl.globalEvents[ctrl.simulationTime]
             eventTooltipString = ''
-            for event in ctrl.events[ctrl.simulationTime]
+            for event in ctrl.globalEvents[ctrl.simulationTime]
                 eventString = "#{event.event_team} - #{event.event_type} - #{event.event_player} - #{event.event_minute}"
                 eventTooltipString += "#{eventString} ---"
             ctrl.eventTooltips.list[ctrl.simulationTime] = eventTooltipString
 
     calculatePlayerScore = () ->
         totalScore = 0
-        for i in [0...ctrl.matches.length] by 1
+        numberOfMatches = ctrl.matches.length
+        finalNumberOfPredictions = TIME.SECONDHALF_END + 1
+
+        for i in [0...numberOfMatches]
             prediction = ctrl.predictions[i]
             match = ctrl.matches[i]
             predictionWasCorrect = prediction.list[ctrl.simulationTime] is match.currentResult[ctrl.simulationTime]
-            totalScore += ((107 - prediction.lastChange)/107) * predictionWasCorrect
-        totalScore /= ctrl.predictions.length
-        ctrl.playerScore[ctrl.simulationTime] = totalScore
+            totalScore += ((finalNumberOfPredictions - prediction.lastChange)/finalNumberOfPredictions) * predictionWasCorrect
+        ctrl.playerScore[ctrl.simulationTime] = totalScore / numberOfMatches
 
     formatCurrentResults = () ->
         for match in ctrl.matches
-            if 46 <= ctrl.simulationTime <= 60 then match.currentResult[ctrl.simulationTime] = match.currentResult[ctrl.simulationTime - 1]
+            if TIME.HALFTIME_START <= ctrl.simulationTime <= TIME.HALFTIME_END
+                match.currentResult[ctrl.simulationTime] = match.currentResult[ctrl.simulationTime - 1]
 
     recordPrediction = () ->
         for prediction in ctrl.predictions
@@ -157,7 +155,7 @@ app = angular.module('footballAPI')
             ctrl.predictionTooltips.list[ctrl.simulationTime] = predictionTooltipString
         else
             predictionTooltipString = ''
-            for i in[0...ctrl.matches.length] by 1
+            for i in[0...ctrl.matches.length]
                 if ctrl.predictions[i].lastChange is ctrl.simulationTime
                     predictionTooltipString += "#{ctrl.predictionTooltips.mostRecent[i]} --- "
             ctrl.predictionTooltips.list[ctrl.simulationTime] = predictionTooltipString

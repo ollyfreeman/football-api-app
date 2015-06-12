@@ -1,4 +1,4 @@
-app = angular.module('footballAPI',['chart.js'])
+angular.module 'footballAPI', ['chart.js']
 
 .config(['ChartJsProvider', (ChartJsProvider) ->
     # configure all charts
