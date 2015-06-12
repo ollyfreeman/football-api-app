@@ -2,7 +2,7 @@ angular.module 'footballAPI'
 
 # SPLIT THIS INTO A Matches, Graph and Table ctrl - all share the same data object (which is init by dataFetcher, which the MatchesController accesses)
 # exposed get (and set) methods on the data object to keep things tight
-.controller('MatchController', ['DataService', '$http', '$interval', 'DATA', 'GRAPH', 'TIME', (DataService, $http, $interval, DATA, GRAPH, TIME) ->
+.controller('MatchController', ['Data', '$http', '$interval', 'DATA', 'GRAPH', 'TIME', (Data, $http, $interval, DATA, GRAPH, TIME) ->
 
     ctrl = this
     ctrl.simulationReady = false
@@ -28,7 +28,7 @@ angular.module 'footballAPI'
 
     # retrieve the basic information about each match
     # and initialise the controller properties accordingly
-    DataService.getInitalMatchInfo().then () ->
+    Data.getInitalMatchInfo().then () ->
         initaliseMatches()
         initaliseEvents()
         initialisePredictions()
@@ -45,7 +45,7 @@ angular.module 'footballAPI'
     ctrl.startSimulation = () ->
         lengthOfSimulatedMinute = TIME.SIXTY_SECONDS/ctrl.matchSpeed
 
-        DataService.startMatch(ctrl.matchSpeed).then () ->
+        Data.startMatch(ctrl.matchSpeed).then () ->
             # execute once per simulated minute
             intervalId = newInterval(lengthOfSimulatedMinute, () ->
 
@@ -82,10 +82,10 @@ angular.module 'footballAPI'
     ###
 
     initaliseMatches = () ->
-        ctrl.matches = DataService.matches
+        ctrl.matches = Data.matches
 
     initaliseEvents = () ->
-        ctrl.globalEvents = DataService.globalEvents
+        ctrl.globalEvents = Data.globalEvents
 
     initialisePredictions = () ->
         for match in ctrl.matches

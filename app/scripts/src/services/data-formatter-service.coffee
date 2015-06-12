@@ -1,8 +1,6 @@
 angular.module 'footballAPI'
 
-.factory('DataFormatterService', ['DATA', 'TIME', (DATA, TIME) ->
-
-    dataFormatterService = {}
+.factory('DataFormatter', ['DATA', 'TIME', (DATA, TIME) ->
 
     # created a formattedMatch containing the basic information about each match
     dataFormatterService.processRawMatch = (rawMatch) ->

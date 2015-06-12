@@ -1,6 +1,6 @@
 angular.module 'footballAPI'
 
-.factory('DataService', ['DataFormatterService', '$http', '$interval', '$q', '$timeout', 'TIME', 'URL', (DataFormatterService, $http, $interval, $q, $timeout, TIME, URL) ->
+.factory('Data', ['DataFormatter', '$http', '$interval', '$q', '$timeout', 'TIME', 'URL', (DataFormatter, $http, $interval, $q, $timeout, TIME, URL) ->
 
     dataService = {}
     dataService.time = TIME.INITIAL_TIME
@@ -11,7 +11,7 @@ angular.module 'footballAPI'
     dataService.getInitalMatchInfo = () ->
         return $q (resolve, reject) ->
             $http.get(URL.GET_INITIAL_MATCH_INFO).success((data, status) ->
-                dataService.matches.push(DataFormatterService.processRawMatch(match)) for match in data
+                dataService.matches.push(DataFormatter.processRawMatch(match)) for match in data
                 resolve()
             ).error((data, status) ->
                 reject()
@@ -30,7 +30,7 @@ angular.module 'footballAPI'
                 # execute once per simulated minute
                 intervalId = executeAndNewInterval(lengthOfSimulatedMinute, () ->
                     $http.get(getSimulationUpdateURL).success((data, status) ->
-                        dataService.time = DataFormatterService.processLiveData(
+                        dataService.time = DataFormatter.processLiveData(
                                             dataService.time,
                                             dataService.matches,
                                             dataService.globalEvents,
