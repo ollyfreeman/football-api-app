@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='footballAPI'>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>My AngularJS App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body ng-controller='MatchController as matchCtrl'>
+
+    <button type="button" ng-click='matchCtrl.startSimulation()' ng-disabled="!matchCtrl.simulationReady">Start</button>
+
+    <div ng-repeat='match in matchCtrl.matches'>
+        <h3>{{match.home_team}} {{match.home_score}} - {{match.away_score}} {{match.away_team}}</h3>
+    </div>
+
+    <script src="../../bower_components/angular/angular.min.js"></script>
+    <script src="../../bower_components/Chart.js/Chart.min.js"></script>
+    <script src="../../bower_components/angular-chart.js/dist/angular-chart.js"></script>
+    <script type="text/javascript" src="./lib/app.js"></script>
+    <script type="text/javascript" src="./lib/data-service.js"></script>
+</body>
+</html>
