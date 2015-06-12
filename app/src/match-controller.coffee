@@ -7,11 +7,13 @@ app = angular.module('footballAPI')
     ctrl = this
     ctrl.simulationReady = false
     ctrl.simulationTime = 0
-    ctrl.matchSpeed = 30
+    ctrl.matchSpeed = 200
 
     ctrl.matches = []
+    ctrl.events = []
     ctrl.predictions = []
     ctrl.predictionTooltips = {}
+    ctrl.eventTooltips = {}
     ctrl.playerScore = []
     ctrl.graphData = []
     ctrl.graphLabels = []
@@ -20,8 +22,10 @@ app = angular.module('footballAPI')
 
     DataService.getInitalMatchInfo().then () ->
         initaliseMatches()
+        initaliseEvents()
         initialisePredictions()
         initialisePredictionTooltips()
+        initialiseEventTooltips()
         initialisePlayerScore()
         initialiseGraphData()
         initialiseGraphLabels()
@@ -41,11 +45,20 @@ app = angular.module('footballAPI')
 
                 # TODO: go onto 1 second poll if we are ahead of the server
 
+                # TODO: comment
+                formatCurrentResults()
+
                 # store prediction for this minute
                 recordPrediction()
 
+                # TODO: comment
+                addEventTooltip()
+
                 # calculate the playerScore
                 calculatePlayerScore()
+
+                console.log(ctrl.predictionTooltips)
+                console.log(ctrl.eventTooltips)
 
                 # increase the simulation time
                 ctrl.simulationTime += 1
@@ -64,6 +77,9 @@ app = angular.module('footballAPI')
     initaliseMatches = () ->
         ctrl.matches = DataService.matches
 
+    initaliseEvents = () ->
+        ctrl.events = DataService.events
+
     initialisePredictions = () ->
         for match in ctrl.matches
             ctrl.predictions.push({ current: 'draw', lastChange: 0, list: ['draw'] })
@@ -71,6 +87,9 @@ app = angular.module('footballAPI')
     initialisePredictionTooltips = () ->
         ctrl.predictionTooltips.list = (null for [0..106])
         ctrl.predictionTooltips.mostRecent = (null for match in ctrl.matches)
+
+    initialiseEventTooltips = () ->
+        ctrl.eventTooltips.list = (null for [0..106])
 
     initialisePlayerScore = () ->
         ctrl.playerScore = (0 for [0..106])
@@ -96,16 +115,27 @@ app = angular.module('footballAPI')
         $interval.cancel(intervalId)
         console.log 'Match Finished.'
 
+    addEventTooltip = () ->
+        if ctrl.events[ctrl.simulationTime]
+            eventTooltipString = ''
+            for event in ctrl.events[ctrl.simulationTime]
+                eventString = "#{event.event_team} - #{event.event_type} - #{event.event_player} - #{event.event_minute}"
+                eventTooltipString += "#{eventString} ---"
+            ctrl.eventTooltips.list[ctrl.simulationTime] = eventTooltipString
+
     calculatePlayerScore = () ->
         totalScore = 0
         for i in [0...ctrl.matches.length] by 1
             prediction = ctrl.predictions[i]
             match = ctrl.matches[i]
-            #TODO: if it's half time then match.currentResult[ctrl.simulationTime] is only defined on 45/HT
             predictionWasCorrect = prediction.list[ctrl.simulationTime] is match.currentResult[ctrl.simulationTime]
             totalScore += ((107 - prediction.lastChange)/107) * predictionWasCorrect
         totalScore /= ctrl.predictions.length
         ctrl.playerScore[ctrl.simulationTime] = totalScore
+
+    formatCurrentResults = () ->
+        for match in ctrl.matches
+            if 46 <= ctrl.simulationTime <= 60 then match.currentResult[ctrl.simulationTime] = match.currentResult[ctrl.simulationTime - 1]
 
     recordPrediction = () ->
         for prediction in ctrl.predictions

@@ -6,6 +6,18 @@
 	background-color: blue
 }
 
-.prediction-made {
+.prediction-occured {
 	background-color: red
+}
+
+.event-tooltip {
+	display:inline;
+	float: left;
+	width: 10px;
+	height: 10px;
+	background-color: green
+}
+
+.event-occurred {
+	background-color: black
 }
