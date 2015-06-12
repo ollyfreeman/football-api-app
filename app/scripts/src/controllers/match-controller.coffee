@@ -9,15 +9,25 @@ angular.module 'footballAPI'
     ctrl.simulationTime = 0
     ctrl.matchSpeed = 200
 
+    # formatted data for each match
     ctrl.matches = []
+    # list of events that occur in every time slot
     ctrl.globalEvents = []
+    # predictions for each match
     ctrl.predictions = []
+    # prediction tooltip text
     ctrl.predictionTooltips = {}
+    # event tooltip text
     ctrl.eventTooltips = {}
+    # player score for every time slot
     ctrl.playerScore = []
+    # data used for angular-chart
     ctrl.graphData = []
+    # labels for angular-chart
     ctrl.graphLabels = []
 
+    # retrieve the basic information about each match
+    # and initialise the controller properties accordingly
     DataService.getInitalMatchInfo().then () ->
         initaliseMatches()
         initaliseEvents()
@@ -31,11 +41,12 @@ angular.module 'footballAPI'
     , () ->
         console.log(':(')
 
+    # start the simulation
     ctrl.startSimulation = () ->
         lengthOfSimulatedMinute = TIME.SIXTY_SECONDS/ctrl.matchSpeed
 
         DataService.startMatch(ctrl.matchSpeed).then () ->
-            # execute this once per simulated minute
+            # execute once per simulated minute
             intervalId = newInterval(lengthOfSimulatedMinute, () ->
 
                 # finish the simulation if full time is reached
@@ -61,6 +72,7 @@ angular.module 'footballAPI'
         , () ->
             console.log(':(')
 
+    # change the current prediction for a given match
     ctrl.changePrediction = (matchIndex) ->
         ctrl.predictions[matchIndex].lastChange = ctrl.simulationTime
         addPredictionTooltip(matchIndex)
