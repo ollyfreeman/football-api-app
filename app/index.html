@@ -6,19 +6,36 @@
     <title>My AngularJS App</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../bower_components/angular-chart.js/dist/angular-chart.css">
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body ng-controller='MatchController as matchCtrl'>
 
-    <button type="button" ng-click='matchCtrl.startSimulation()' ng-disabled="!matchCtrl.simulationReady">Start</button>
+    <div> <!-- <div ng-show="matrchCtrl.simulationReady"> breaks angular-chart -->
+        <button type="button" ng-click='matchCtrl.startSimulation()' ng-disabled="!matchCtrl.simulationReady">Start</button>
 
-    <div ng-repeat='match in matchCtrl.matches'>
-        <h3>{{match.home_team}} {{match.home_score}} - {{match.away_score}} {{match.away_team}}</h3>
+        <div ng-repeat='match in matchCtrl.matches'>
+            <h3>{{match.home_team}} {{match.home_score}} - {{match.away_score}} {{match.away_team}}</h3>
+            <input id="radio-{{$index}}-home" type="radio" style="display:inline" ng-model="matchCtrl.predictions[$index].current" value="home" ng-change="matchCtrl.changePrediction($index)" />
+            <input id="radio-{{$index}}-draw" type="radio" style="display:inline" ng-model="matchCtrl.predictions[$index].current" value="draw" ng-change="matchCtrl.changePrediction($index)" />
+            <input id="radio-{{$index}}-away" type="radio" style="display:inline" ng-model="matchCtrl.predictions[$index].current" value="away" ng-change="matchCtrl.changePrediction($index)" />
+        </div>
+
+        <canvas id="lineChart" class="chart chart-line" data="matchCtrl.graphData" labels="matchCtrl.graphLabels" width="1070px" height="600px"></canvas>
+
+        <!-- set background class (lightning or not) dependent on whether predictionTooltips.list is null or not -->
+        <div style="margin-left: 25px;">
+            <div ng-repeat='predictionTooltip in matchCtrl.predictionTooltips.list track by $index'>
+                <div style="display:inline;" ng-class="{ 'prediction-made': predictionTooltip }" class="prediction-tooltip"></div>
+            </div>
+        </div>
     </div>
 
     <script src="../../bower_components/angular/angular.min.js"></script>
     <script src="../../bower_components/Chart.js/Chart.min.js"></script>
     <script src="../../bower_components/angular-chart.js/dist/angular-chart.js"></script>
     <script type="text/javascript" src="./lib/app.js"></script>
+    <script type="text/javascript" src="./lib/match-controller.js"></script>
     <script type="text/javascript" src="./lib/data-service.js"></script>
 </body>
 </html>

@@ -1,0 +1,11 @@
+.prediction-tooltip {
+	display:inline;
+	float: left;
+	width: 10px;
+	height: 10px;
+	background-color: blue
+}
+
+.prediction-made {
+	background-color: red
+}

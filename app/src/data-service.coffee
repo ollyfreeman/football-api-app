@@ -5,10 +5,11 @@ app = angular.module('footballAPI')
 
 app.factory('DataService', ['$http', '$q', '$interval', '$timeout', ($http, $q, $interval, $timeout) ->
     dataService = {}
-    SIXTY_SECONDS = 60000
     dataService.time = -1
     dataService.matches = []
     dataService.events = []
+
+    SIXTY_SECONDS = 60000
 
     dataService.getInitalMatchInfo = () ->
         return $q (resolve, reject) ->
@@ -26,15 +27,16 @@ app.factory('DataService', ['$http', '$q', '$interval', '$timeout', ($http, $q, 
 
         return $q (resolve, reject) ->
             $http.get(startSimulationURL).success((data, status) ->
-                resolve()
                 tokenId = data.tokenId
                 getSimulationUpdateURL = "http://localhost:8080/api/?Action=today&tokenId=#{tokenId}"
                 intervalId = executeAndNewInterval(lengthOfSimulatedMinute, () ->
                     $http.get(getSimulationUpdateURL).success((data, status) ->
                         processLiveData(dataService, data, tokenId)
+                        resolve()
                         $interval.cancel(intervalId) if dataService.time >= 106
                     ).error((data, status) ->
                         $interval.cancel(intervalId)
+                        reject()
                     )
                 )
             ).error((data, status) ->
@@ -58,7 +60,7 @@ processRawMatch = (dataService, rawMatch) ->
     formattedMatch.home_score = 0
     formattedMatch.away_score = 0
     formattedMatch.events = []
-    formattedMatch.currentResults = ['draw']
+    formattedMatch.currentResult = ['draw']
     dataService.matches.push(formattedMatch)
 
 processLiveData = (dataService, data, tokenId) ->
@@ -75,7 +77,7 @@ processLiveData = (dataService, data, tokenId) ->
                 [homeScore, awayScore] = rawEvent.event_result.replace('[','').replace(']','').split(' - ').map((el) -> parseInt(el))
                 formattedMatch.home_score = homeScore
                 formattedMatch.away_score = awayScore
-                formattedMatch.currentResults[rawEventTime] = getCurrentResult(homeScore, awayScore)
+                formattedMatch.currentResult[rawEventTime] = getCurrentResult(homeScore, awayScore)
             rawEvent.event_team = if rawEvent.event_team is 'localteam' then formattedMatch.home_team else formattedMatch.away_team
             formattedMatch.events.push(rawEvent)
             if not dataService.events[rawMatchTime]
@@ -83,8 +85,8 @@ processLiveData = (dataService, data, tokenId) ->
             else
                 dataService.events[rawMatchTime].push(rawEvent)
         for j in [dataService.time + 1..rawMatchTime] by 1
-            if not formattedMatch.currentResults[j]
-                formattedMatch.currentResults[j] = formattedMatch.currentResults[j - 1]
+            if not formattedMatch.currentResult[j]
+                formattedMatch.currentResult[j] = formattedMatch.currentResult[j - 1]
     dataService.time = rawMatchTime
 
 getCurrentResult = (homeScore, awayScore) ->
