@@ -21,14 +21,14 @@ angular.module 'footballAPI'
         for i in [0...formattedMatches.length]
             rawMatch = rawData.matches[i]
             formattedMatch = formattedMatches[i]
-            matchTime = getMatchTime(rawMatch)
             rawEvents = rawMatch.match_events
+            matchTime = getTime(rawMatch[DATA.MATCH_TIMER], rawMatch)
 
             # process all match events that have occured since last call to processLiveData
             # i.e. we allow for missed server responses
             for j in [formattedMatch.events.length...rawEvents.length]
                 rawEvent = rawEvents[j]
-                rawEventTime = parseInt(rawEvent[DATA.EVENT_TIME])
+                eventTime = getTime(parseInt(rawEvent[DATA.EVENT_TIME]), rawMatch)
 
                 # if rawEvent was a goal, we need to change match scores and currentResult accordingly
                 if rawEvent[DATA.EVENT_TYPE] == DATA.EVENT_TYPE_GOAL
@@ -38,7 +38,7 @@ angular.module 'footballAPI'
                     formattedMatch.home_score = homeScore
                     formattedMatch.away_score = awayScore
                     # set currentResult
-                    formattedMatch.currentResult[rawEventTime] = getCurrentResult(homeScore, awayScore)
+                    formattedMatch.currentResult[eventTime] = getCurrentResult(homeScore, awayScore)
 
                 # set the event_team field from 'localteam' or 'visitorteam' to the actual team name - to help with tooltips
                 rawEvent[DATA.EVENT_TEAM] = getEventTeam(rawEvent, formattedMatch.home_team, formattedMatch.away_team)
@@ -46,8 +46,7 @@ angular.module 'footballAPI'
                 # add the event to the formattedMatch events list
                 formattedMatch.events.push(rawEvent)
                 # add the event to the global events list
-                # TODO - need to add this at the EVENT TIME, not the match time
-                addEventToGlobalEvents(rawEvent, matchTime, globalEvents)
+                addEventToGlobalEvents(rawEvent, eventTime, globalEvents)
 
             # allowing for missed server responses...
             for j in [dataTime+1..matchTime]
@@ -56,12 +55,13 @@ angular.module 'footballAPI'
 
         return matchTime
 
-    getMatchTime = (rawMatch) ->
+    # retuns an integer that is 0-45 if in the first half, 45 if in half time, 61-106 if in the second half, and 106 if the match is over
+    getTime = (rawTime, rawMatch) ->
         if rawMatch[DATA.MATCH_TIMER] is DATA.MATCH_TIMER_FINISHED
-            TIME.SECONDHALF_END
+            return TIME.SECONDHALF_END
         else
             offset = if isSecondHalf(rawMatch) then TIME.SECONDHALF_START-TIME.FIRSTHALF_END else TIME.FIRSTHALF_START
-            parseInt(rawMatch[DATA.MATCH_TIMER]) + offset
+            return parseInt(rawMatch[DATA.MATCH_TIMER]) + offset
 
     isSecondHalf = (rawMatch) ->
         (rawMatch[DATA.HT_SCORE] isnt DATA.HT_SCORE_NOT_REACHED) and (rawMatch[DATA.MATCH_STATUS] isnt DATA.MATCH_STATUS_HT)
