@@ -1,0 +1,11 @@
+<div layout="row" layout-sm="column" layout-wrap>
+  <div ng-repeat='match in gameCtrl.matches' flex="50">
+    <div layout="row" layout-align="center">
+      <md-button ng-class="{'md-accent': gameCtrl.predictions[$index].current === 'home win'}" class="fapi-team-button" ng-click="gameCtrl.changePrediction('home win', $index)">{{match.home_team}}</md-button>
+      <h3>{{match.home_score}}</h3>
+      <md-button ng-class="{'md-accent': gameCtrl.predictions[$index].current === 'draw'}" class="fapi-vs-button" ng-click="gameCtrl.changePrediction('draw', $index)"> v </md-button>
+      <h3>{{match.away_score}}</h3>
+      <md-button ng-class="{'md-accent': gameCtrl.predictions[$index].current === 'away win'}" class="fapi-team-button" ng-click="gameCtrl.changePrediction('away win', $index)">{{match.away_team}}</md-button>
+    </div>
+  </div>
+</div>

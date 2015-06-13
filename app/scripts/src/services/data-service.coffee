@@ -1,6 +1,8 @@
 angular.module 'footballAPI'
 
-.factory('Data', ['DataFormatter', '$http', '$interval', '$q', '$timeout', 'TIME', 'URL', (DataFormatter, $http, $interval, $q, $timeout, TIME, URL) ->
+.factory('Data'\
+, ['DataFormatter', '$http', '$interval', '$q', '$timeout', 'TIME', 'URL'
+, (DataFormatter, $http, $interval, $q, $timeout, TIME, URL) ->
 
     dataService = {}
     dataService.time = TIME.INITIAL_TIME
@@ -8,8 +10,7 @@ angular.module 'footballAPI'
     dataService.globalEvents = []
 
     # retrieve the basic information about each match
-    # TODO: display error message if something goes wrong
-    dataService.getInitalMatchInfo = () ->
+    dataService.initialise = () ->
         return $q (resolve, reject) ->
             $http.get(URL.GET_INITIAL_MATCH_INFO).success((data, status) ->
                 dataService.matches.push(DataFormatter.processRawMatch(match)) for match in data
@@ -46,6 +47,9 @@ angular.module 'footballAPI'
             ).error((data, status) ->
                 reject()
             )
+
+    dataService.formatCurrentResults = (time) ->
+        DataFormatter.formatCurrentResults(time, dataService.matches)
 
     executeAndNewInterval = (interval, callback) ->
         callback()

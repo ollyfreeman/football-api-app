@@ -20,61 +20,21 @@
   <md-content class="md-padding">
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="GAME">
-        <md-content class="md-padding" layout="column" ng-controller='MatchController as matchCtrl'>
+        <md-content class="md-padding" layout="column" ng-controller='GameController as gameCtrl'>
 
           <h1 class="md-display-2">GAME</h1>
 
-          <div layout="row" layout-wrap>
-          <div ng-repeat='match in matchCtrl.matches' flex="50">
-            <div layout="row" layout-align="center">
-              <md-button ng-class="{'md-accent': matchCtrl.predictions[$index].current === 'home win'}" style="min-width:200px" ng-click="matchCtrl.changePrediction('home win', $index)">{{match.home_team}}</md-button>
-              <h3>{{match.home_score}}</h3>
-              <md-button ng-class="{'md-accent': matchCtrl.predictions[$index].current === 'draw'}" style="min-width:50px" ng-click="matchCtrl.changePrediction('draw',$index)"> v </md-button>
-              <h3>{{match.away_score}}</h3>
-              <md-button ng-class="{'md-accent': matchCtrl.predictions[$index].current === 'away win'}" style="min-width:200px" ng-click="matchCtrl.changePrediction('away win',$index)">{{match.away_team}}</md-button>
-            </div>
-          </div>
-          </div>
+          <game-matches></game-matches>
 
-          <md-button ng-click='matchCtrl.startSimulation()' ng-disabled="!matchCtrl.simulationReady">{{matchCtrl.buttonText}}</md-button>
+          <game-button></game-button>
 
-          <div style="margin:auto">
-            <canvas id="lineChart" class="chart chart-line" data="matchCtrl.graphData" labels="matchCtrl.graphLabels" width="1090px" height="200px"></canvas>
-          </div>
+          <game-graph></game-graph>
 
-          <div layout="row" layout-align="center">
-            <p layout-align="center center">Predictions</p>
-          </div>
+          <game-bar-display title="Predictions"></game-bar-display>
 
-          <div layout="row" style="margin:auto">
-            <div style="width:20px"></div>
-            <div ng-repeat='predictionTooltip in matchCtrl.predictionTooltips.list track by $index'>
-              <div ng-class="{ 'fapi-prediction-occured': predictionTooltip }" class="tooltip">
-                <md-tooltip md-direction="top" ng-show="predictionTooltip">{{matchCtrl.tooltipLabels[$index]}}</md-tooltip>
-                <md-tooltip md-direction="bottom" ng-show="predictionTooltip">{{predictionTooltip}}</md-tooltip>
-              </div>
-            </div>
-          </div>
+          <game-bar-display title="Goals"></game-bar-display>
 
-          <div layout="row" layout-align="center">
-            <p layout-align="center center">Goals</p>
-          </div>
-
-          <div layout="row" style="margin:auto">
-            <div style="width:20px"></div>
-            <div ng-repeat='eventTooltip in matchCtrl.eventTooltips.list track by $index'>
-              <div style="display:inline;" ng-class="{ 'fapi-event-occurred': eventTooltip }" class="tooltip">
-                <md-tooltip md-direction="top" ng-show="eventTooltip">{{matchCtrl.tooltipLabels[$index]}}</md-tooltip>
-                <md-tooltip md-direction="bottom" ng-show="eventTooltip">{{eventTooltip}}</md-tooltip>
-              </div>
-            </div>
-          </div>
-
-          <div layout="row" layout-align="center">
-            <p layout-align="center center">Player Score</p>
-          </div>
-
-          <h3 layout-align="center center" style="margin:auto">{{matchCtrl.currentPlayerScore | number:1}}</h3>
+          <game-score></game-score>
 
         </md-content>
       </md-tab>
@@ -106,13 +66,30 @@
   <script src="../../bower_components/angular-aria/angular-aria.js"></script>
   <script src="../../bower_components/angular-animate/angular-animate.js"></script>
   <script src="../../bower_components/angular-material/angular-material.js"></script>
+
   <script type="text/javascript" src="./scripts/lib/app.js"></script>
-  <script type="text/javascript" src="./scripts/lib/controllers/match-controller.js"></script>
+
+  <script type="text/javascript" src="./scripts/lib/controllers/game-controller.js"></script>
   <script type="text/javascript" src="./scripts/lib/controllers/header-controller.js"></script>
-  <script type="text/javascript" src="./scripts/lib/directives/header-directive.js"></script>
+  <script type="text/javascript" src="./scripts/lib/controllers/game-bar-display-controller.js"></script>
+  <script type="text/javascript" src="./scripts/lib/controllers/graph-controller.js"></script>
+
   <script type="text/javascript" src="./scripts/lib/directives/footer-directive.js"></script>
+  <script type="text/javascript" src="./scripts/lib/directives/game-bar-display-directive.js"></script>
+  <script type="text/javascript" src="./scripts/lib/directives/game-button-directive.js"></script>
+  <script type="text/javascript" src="./scripts/lib/directives/game-score-directive.js"></script>
+  <script type="text/javascript" src="./scripts/lib/directives/graph-directive.js"></script>
+  <script type="text/javascript" src="./scripts/lib/directives/header-directive.js"></script>
+  <script type="text/javascript" src="./scripts/lib/directives/matches-directive.js"></script>
+
   <script type="text/javascript" src="./scripts/lib/services/data-formatter-service.js"></script>
   <script type="text/javascript" src="./scripts/lib/services/data-service.js"></script>
-  <script type="text/javascript" src="./scripts/lib/services/constants.js"></script>
+  <script type="text/javascript" src="./scripts/lib/services/global-events-service.js"></script>
+  <script type="text/javascript" src="./scripts/lib/services/graph-service.js"></script>
+  <script type="text/javascript" src="./scripts/lib/services/label-service.js"></script>
+  <script type="text/javascript" src="./scripts/lib/services/player-score-service.js"></script>
+  <script type="text/javascript" src="./scripts/lib/services/prediction-service.js"></script>
+
+  <script type="text/javascript" src="./scripts/lib/constants/constants.js"></script>
 </body>
 </html>

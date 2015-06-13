@@ -5,7 +5,7 @@ module.exports = (grunt) ->
         pkg: grunt.file.readJSON('package.json')
 
         coffeelint: {
-            app: ['./app/*.coffee', './test/*.coffee']
+            app: ['./app/scripts/src/**/*.coffee']
             options: {
                 configFile: './coffeelint.json'
             }

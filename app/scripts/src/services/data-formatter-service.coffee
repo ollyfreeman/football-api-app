@@ -1,6 +1,7 @@
 angular.module 'footballAPI'
 
-.factory('DataFormatter', ['DATA', 'TIME', (DATA, TIME) ->
+.factory( 'DataFormatter', ['DATA', 'TIME', (DATA, TIME) ->
+
     dataFormatter = {}
 
     # created a formattedMatch containing the basic information about each match
@@ -14,7 +15,8 @@ angular.module 'footballAPI'
         formattedMatch.currentResult = [DATA.DRAW]
         return formattedMatch
 
-    # edit the supplied formattedMatches and globalEvents data, given the rawData and the current dataTime
+    # edit the supplied formattedMatches and globalEvents data,
+    # given the rawData and the current dataTime
     dataFormatter.processLiveData = (dataTime, formattedMatches, globalEvents, rawData) ->
 
         # for each match, set up the necessary variables
@@ -30,18 +32,24 @@ angular.module 'footballAPI'
                 rawEvent = rawEvents[j]
                 eventTime = getTime(parseInt(rawEvent[DATA.EVENT_TIME]), rawMatch)
 
-                # if rawEvent was a goal, we need to change match scores and currentResult accordingly
+                # if rawEvent was a goal,
+                #we need to change match scores and currentResult accordingly
                 if rawEvent[DATA.EVENT_TYPE] == DATA.EVENT_TYPE_GOAL
-                    [homeScore, awayScore] = rawEvent[DATA.EVENT_RESULT].replace('[','').replace(']','')
-                                                                        .split(' - ').map((el) -> parseInt(el))
+                    [homeScore, awayScore] = rawEvent[DATA.EVENT_RESULT]
+                                                .replace('[','').replace(']','')
+                                                .split(' - ').map((el) -> parseInt(el))
                     # set match scores
                     formattedMatch.home_score = homeScore
                     formattedMatch.away_score = awayScore
                     # set currentResult
-                    formattedMatch.currentResult[eventTime] = getCurrentResult(homeScore, awayScore)
+                    formattedMatch.currentResult[eventTime] =
+                        getCurrentResult(homeScore, awayScore)
 
-                # set the event_team field from 'localteam' or 'visitorteam' to the actual team name - to help with tooltips
-                rawEvent[DATA.EVENT_TEAM] = getEventTeam(rawEvent, formattedMatch.home_team, formattedMatch.away_team)
+                # set the event_team field from 'localteam' or 'visitorteam'
+                # to the actual team name - to help with tooltips
+                rawEvent[DATA.EVENT_TEAM] = getEventTeam(rawEvent,
+                                                        formattedMatch.home_team,
+                                                        formattedMatch.away_team)
 
                 # add the event to the formattedMatch events list
                 formattedMatch.events.push(rawEvent)
@@ -51,33 +59,45 @@ angular.module 'footballAPI'
             # allowing for missed server responses...
             for j in [dataTime+1..matchTime]
                 # ...set currentResult in the case that there was no event
-                formattedMatch.currentResult[j] = formattedMatch.currentResult[j - 1] if not formattedMatch.currentResult[j]
+                if not formattedMatch.currentResult[j]
+                    formattedMatch.currentResult[j] = formattedMatch.currentResult[j - 1]
 
         return matchTime
 
-    # retuns an integer that is 0-45 if in the first half, 45 if in half time, 61-106 if in the second half, and 106 if the match is over
+    # Fills in the current result for timeslots during half-time
+    dataFormatter.formatCurrentResults = (time, matches) ->
+        for match in matches
+            if TIME.HALFTIME_START <= time <= TIME.HALFTIME_END
+                match.currentResult[time] = match.currentResult[time - 1]
+
+    # retuns an integer that is:
+    # 0-45 if in the first half, 45 if in half time,
+    # 61-106 if in the second half, and 106 if the match is over
     getTime = (rawTime, rawMatch) ->
         if rawMatch[DATA.MATCH_TIMER] is DATA.MATCH_TIMER_FINISHED
             return TIME.SECONDHALF_END
         else
-            offset = if isSecondHalf(rawMatch) then TIME.SECONDHALF_START-TIME.FIRSTHALF_END else TIME.FIRSTHALF_START
+            if isSecondHalf(rawMatch) then offset = TIME.SECONDHALF_START-TIME.FIRSTHALF_END
+            else offset = TIME.FIRSTHALF_START
             return parseInt(rawMatch[DATA.MATCH_TIMER]) + offset
 
     isSecondHalf = (rawMatch) ->
-        (rawMatch[DATA.HT_SCORE] isnt DATA.HT_SCORE_NOT_REACHED) and (rawMatch[DATA.MATCH_STATUS] isnt DATA.MATCH_STATUS_HT)
+        haveReachedHalfTime = rawMatch[DATA.HT_SCORE] isnt DATA.HT_SCORE_NOT_REACHED
+        isntHalfTime = rawMatch[DATA.MATCH_STATUS] isnt DATA.MATCH_STATUS_HT
+        return haveReachedHalfTime and isntHalfTime
 
     getCurrentResult = (homeScore, awayScore) ->
         scoreDiff = homeScore - awayScore
-        if scoreDiff > 0 then actual = DATA.HOME_WIN else if scoreDiff < 0 then actual = DATA.AWAY_WIN else actual = DATA.DRAW
+        if scoreDiff > 0 then actual = DATA.HOME_WIN
+        else if scoreDiff < 0 then actual = DATA.AWAY_WIN
+        else actual = DATA.DRAW
 
     getEventTeam = (rawEvent, homeTeam, awayTeam) ->
         if rawEvent[DATA.EVENT_TEAM] is DATA.HOME_TEAM then homeTeam else awayTeam
 
     addEventToGlobalEvents = (rawEvent, matchTime, globalEvents) ->
-        if not globalEvents[matchTime]
-            globalEvents[matchTime] = [rawEvent]
-        else
-            globalEvents[matchTime].push(rawEvent)
+        if not globalEvents[matchTime] then globalEvents[matchTime] = [rawEvent]
+        else globalEvents[matchTime].push(rawEvent)
 
     return dataFormatter
 ])

@@ -1,20 +1,39 @@
-.tooltip {
-    display:block;
-    float: left;
+game-bar-display, game-button, game-graph, game-score {
+    margin: auto;
+}
+
+game-score h3 {
+    text-align: center;
+    margin-top: 0;
+}
+
+.fapi-game-bar-offset {
+    width: : 20px;
+}
+
+.fapi-team-button {
+    min-width: 200px;
+}
+
+.fapi-tooltip {
     width: 10px;
     height: 10px;
     background-color: rgba(158,158,158,0.2);
 }
 
-.fapi-prediction-occured, .fapi-event-occurred {
+.fapi-event-occurred {
     background-color: #FF4081;
+}
+
+.fapi-vs-button {
+    min-width: 50px;
+}
+
+#fapi-footer {
+    min-height: 20px;
+    padding-top: 4px;
 }
 
 #fapi-github-icon, #fapi-linkedin-icon {
     margin-top: 10px;
-}
-
-#fapi-footer {
-	min-height: 20px;
-	padding-top: 4px;
 }
