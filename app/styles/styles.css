@@ -6,18 +6,15 @@
     background-color: rgba(158,158,158,0.2);
 }
 
-.prediction-occured {
+.fapi-prediction-occured, .fapi-event-occurred {
     background-color: #FF4081;
 }
 
-.event-occurred {
-    background-color: #FF4081;
-}
-
-.github-icon {
+#fapi-github-icon, #fapi-linkedin-icon {
     margin-top: 10px;
 }
 
-.fapi-footer {
-	min-height: 30px;
+#fapi-footer {
+	min-height: 20px;
+	padding-top: 4px;
 }

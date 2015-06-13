@@ -47,5 +47,7 @@ angular.module 'footballAPI'
     GET_INITIAL_MATCH_INFO: 'http://localhost:8080/api/?Action=matches'
     START_SIMULATON_PREFIX: 'http://localhost:8080/api/?Action=start&matchspeed='
     GET_SIMULATON_UPDATE_PREFIX: 'http://localhost:8080/api/?Action=today&tokenId='
+    GITHUB: 'https://github.com/ollyfreeman/football-api-app'
+    LINKEDIN: 'https://www.linkedin.com/profile/view?id=217892821'
 }
 

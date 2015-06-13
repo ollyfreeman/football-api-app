@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
+  <title>FOOTBALL-API APP</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../../bower_components/angular-chart.js/dist/angular-chart.css">
@@ -13,14 +13,8 @@
 
 <body ng-controller='MatchController as matchCtrl' layout="column" layout-fill>
 
-  <md-toolbar md-scroll-shrink>
-    <div class="md-toolbar-tools">
-      <h2><span>FOOTBALL-API APP</span></h2>
-      <span flex></span>
-      <md-button>
-        <img src="./img/GitHub-Mark-Light-32px.png" class="github-icon" />
-      </md-button>
-    </div>
+  <md-toolbar md-scroll-shrink id="fapi-header">
+    <app-toolbar></app-toolbar>
   </md-toolbar>
 
   <md-content class="md-padding">
@@ -57,7 +51,7 @@
           <div layout="row" style="margin:auto">
             <div style="width:20px"></div>
             <div ng-repeat='predictionTooltip in matchCtrl.predictionTooltips.list track by $index'>
-              <div ng-class="{ 'prediction-occured': predictionTooltip }" class="tooltip">
+              <div ng-class="{ 'fapi-prediction-occured': predictionTooltip }" class="tooltip">
                 <md-tooltip md-direction="top" ng-show="predictionTooltip">{{matchCtrl.tooltipLabels[$index]}}</md-tooltip>
                 <md-tooltip md-direction="bottom" ng-show="predictionTooltip">{{predictionTooltip}}</md-tooltip>
               </div>
@@ -71,7 +65,7 @@
           <div layout="row" style="margin:auto">
             <div style="width:20px"></div>
             <div ng-repeat='eventTooltip in matchCtrl.eventTooltips.list track by $index'>
-              <div style="display:inline;" ng-class="{ 'event-occurred': eventTooltip }" class="tooltip">
+              <div style="display:inline;" ng-class="{ 'fapi-event-occurred': eventTooltip }" class="tooltip">
                 <md-tooltip md-direction="top" ng-show="eventTooltip">{{matchCtrl.tooltipLabels[$index]}}</md-tooltip>
                 <md-tooltip md-direction="bottom" ng-show="eventTooltip">{{eventTooltip}}</md-tooltip>
               </div>
@@ -98,10 +92,8 @@
     </md-tabs>
   </md-content>
 
-  <md-toolbar class="fapi-footer">
-    <div layout="row" layout-align="center center" flex>
-      <span class="md-caption">Copyright © Olly Freeman 2015</span>
-    </div>
+  <md-toolbar id="fapi-footer">
+    <app-footer></app-footer>
   </md-toolbar>
 
   <script src="../../bower_components/angular/angular.min.js"></script>
@@ -112,6 +104,9 @@
   <script src="../../bower_components/angular-material/angular-material.js"></script>
   <script type="text/javascript" src="./scripts/lib/app.js"></script>
   <script type="text/javascript" src="./scripts/lib/controllers/match-controller.js"></script>
+  <script type="text/javascript" src="./scripts/lib/controllers/header-controller.js"></script>
+  <script type="text/javascript" src="./scripts/lib/directives/header-directive.js"></script>
+  <script type="text/javascript" src="./scripts/lib/directives/footer-directive.js"></script>
   <script type="text/javascript" src="./scripts/lib/services/data-formatter-service.js"></script>
   <script type="text/javascript" src="./scripts/lib/services/data-service.js"></script>
   <script type="text/javascript" src="./scripts/lib/services/constants.js"></script>
