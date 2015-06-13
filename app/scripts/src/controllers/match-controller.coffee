@@ -1,13 +1,11 @@
 angular.module 'footballAPI'
 
-# SPLIT THIS INTO A Matches, Graph and Table ctrl - all share the same data object (which is init by dataFetcher, which the MatchesController accesses)
-# exposed get (and set) methods on the data object to keep things tight
 .controller('MatchController', ['Data', '$http', '$interval', 'DATA', 'GRAPH', 'TIME', (Data, $http, $interval, DATA, GRAPH, TIME) ->
 
     ctrl = this
     ctrl.simulationReady = false
     ctrl.simulationTime = 0
-    ctrl.matchSpeed = 200
+    ctrl.matchSpeed = 60
 
     # formatted data for each match
     ctrl.matches = []

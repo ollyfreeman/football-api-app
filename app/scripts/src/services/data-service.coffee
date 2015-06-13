@@ -8,7 +8,7 @@ angular.module 'footballAPI'
     dataService.globalEvents = []
 
     # retrieve the basic information about each match
-    # TODO: retry if no response
+    # TODO: display error message if something goes wrong
     dataService.getInitalMatchInfo = () ->
         return $q (resolve, reject) ->
             $http.get(URL.GET_INITIAL_MATCH_INFO).success((data, status) ->

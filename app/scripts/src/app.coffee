@@ -8,8 +8,8 @@ angular.module 'footballAPI', ['chart.js', 'ngMaterial']
         showTooltips: false
 
         scaleOverride: true
-        scaleSteps: 10
-        scaleStepWidth: 0.1
+        scaleSteps: 5
+        scaleStepWidth: 0.2
         scaleStartValue: 0.00
         scaleLabel: ' <%=value%>'
     })
