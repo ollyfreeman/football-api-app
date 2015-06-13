@@ -1,7 +1,7 @@
 (function() {
   angular.module('footballAPI').controller('MatchController', [
-    'DataService', '$http', '$interval', 'DATA', 'GRAPH', 'TIME', function(DataService, $http, $interval, DATA, GRAPH, TIME) {
-      var addEventTooltip, addPredictionTooltip, calculatePlayerScore, ctrl, finishSimulation, formatCurrentResults, initaliseEvents, initaliseMatches, initialiseEventTooltips, initialiseGraphData, initialiseGraphLabels, initialisePlayerScore, initialisePredictionTooltips, initialisePredictions, newInterval, recordPrediction;
+    'Data', '$http', '$interval', 'DATA', 'GRAPH', 'TIME', function(Data, $http, $interval, DATA, GRAPH, TIME) {
+      var addEventTooltip, addPredictionTooltip, calculatePlayerScore, ctrl, finishSimulation, formatCurrentResults, initaliseEvents, initaliseMatches, initialiseEventTooltips, initialiseGraphAndTooltipLabels, initialiseGraphData, initialisePlayerScore, initialisePredictionTooltips, initialisePredictions, newInterval, recordPrediction;
       ctrl = this;
       ctrl.simulationReady = false;
       ctrl.simulationTime = 0;
@@ -14,7 +14,8 @@
       ctrl.playerScore = [];
       ctrl.graphData = [];
       ctrl.graphLabels = [];
-      DataService.getInitalMatchInfo().then(function() {
+      ctrl.tooltipLabels = [];
+      Data.getInitalMatchInfo().then(function() {
         initaliseMatches();
         initaliseEvents();
         initialisePredictions();
@@ -22,7 +23,7 @@
         initialiseEventTooltips();
         initialisePlayerScore();
         initialiseGraphData();
-        initialiseGraphLabels();
+        initialiseGraphAndTooltipLabels();
         return ctrl.simulationReady = true;
       }, function() {
         return console.log(':(');
@@ -30,12 +31,13 @@
       ctrl.startSimulation = function() {
         var lengthOfSimulatedMinute;
         lengthOfSimulatedMinute = TIME.SIXTY_SECONDS / ctrl.matchSpeed;
-        return DataService.startMatch(ctrl.matchSpeed).then(function() {
+        return Data.startMatch(ctrl.matchSpeed).then(function() {
           var intervalId;
           return intervalId = newInterval(lengthOfSimulatedMinute, function() {
             if (ctrl.simulationTime >= TIME.SECONDHALF_END) {
               finishSimulation(intervalId);
             }
+            console.log(ctrl.matches);
             formatCurrentResults();
             recordPrediction();
             addEventTooltip();
@@ -46,7 +48,8 @@
           return console.log(':(');
         });
       };
-      ctrl.changePrediction = function(matchIndex) {
+      ctrl.changePrediction = function(prediction, matchIndex) {
+        ctrl.predictions[matchIndex].current = prediction;
         ctrl.predictions[matchIndex].lastChange = ctrl.simulationTime;
         return addPredictionTooltip(matchIndex);
       };
@@ -55,10 +58,10 @@
       Initialisers
        */
       initaliseMatches = function() {
-        return ctrl.matches = DataService.matches;
+        return ctrl.matches = Data.matches;
       };
       initaliseEvents = function() {
-        return ctrl.globalEvents = DataService.globalEvents;
+        return ctrl.globalEvents = Data.globalEvents;
       };
       initialisePredictions = function() {
         var j, len, match, ref, results;
@@ -118,20 +121,29 @@
       initialiseGraphData = function() {
         return ctrl.graphData.push(ctrl.playerScore);
       };
-      initialiseGraphLabels = function() {
-        var i, j, k, l, m, ref, ref1, ref10, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, results;
+      initialiseGraphAndTooltipLabels = function() {
+        var i, j, k, l, m, n, o, p, ref, ref1, ref10, ref11, ref12, ref13, ref14, ref15, ref16, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, results;
         for (i = j = ref = TIME.FIRSTHALF_START, ref1 = TIME.SECONDHALF_END; ref <= ref1 ? j <= ref1 : j >= ref1; i = ref <= ref1 ? ++j : --j) {
           ctrl.graphLabels.push('');
         }
         for (i = k = ref2 = TIME.FIRSTHALF_START, ref3 = TIME.FIRSTHALF_END - 1, ref4 = GRAPH.LABEL_GAP; ref4 > 0 ? k <= ref3 : k >= ref3; i = k += ref4) {
           ctrl.graphLabels[i] = i + "FH";
         }
-        for (i = l = ref5 = TIME.HALFTIME_START, ref6 = TIME.HALFTIME_END, ref7 = GRAPH.LABEL_GAP; ref7 > 0 ? l <= ref6 : l >= ref6; i = l += ref7) {
+        for (i = l = ref5 = TIME.FIRSTHALF_START, ref6 = TIME.FIRSTHALF_END; l <= ref6; i = l += 1) {
+          ctrl.tooltipLabels[i] = i + "FH";
+        }
+        for (i = m = ref7 = TIME.HALFTIME_START, ref8 = TIME.HALFTIME_END, ref9 = GRAPH.LABEL_GAP; ref9 > 0 ? m <= ref8 : m >= ref8; i = m += ref9) {
           ctrl.graphLabels[i] = (i - TIME.HALFTIME_START) + "HT";
         }
+        for (i = n = ref10 = TIME.HALFTIME_START, ref11 = TIME.HALFTIME_END; n <= ref11; i = n += 1) {
+          ctrl.tooltipLabels[i] = (i - TIME.HALFTIME_START) + "HT";
+        }
+        for (i = o = ref12 = TIME.SECONDHALF_START, ref13 = TIME.SECONDHALF_END, ref14 = GRAPH.LABEL_GAP; ref14 > 0 ? o <= ref13 : o >= ref13; i = o += ref14) {
+          ctrl.graphLabels[i] = (i - (TIME.SECONDHALF_START - TIME.FIRSTHALF_END)) + "SH";
+        }
         results = [];
-        for (i = m = ref8 = TIME.SECONDHALF_START, ref9 = TIME.SECONDHALF_END, ref10 = GRAPH.LABEL_GAP; ref10 > 0 ? m <= ref9 : m >= ref9; i = m += ref10) {
-          results.push(ctrl.graphLabels[i] = (i - (TIME.SECONDHALF_START - TIME.FIRSTHALF_END)) + "SH");
+        for (i = p = ref15 = TIME.SECONDHALF_START, ref16 = TIME.SECONDHALF_END; p <= ref16; i = p += 1) {
+          results.push(ctrl.tooltipLabels[i] = (i - (TIME.SECONDHALF_START - TIME.FIRSTHALF_END)) + "SH");
         }
         return results;
       };
@@ -153,8 +165,11 @@
           ref = ctrl.globalEvents[ctrl.simulationTime];
           for (j = 0, len = ref.length; j < len; j++) {
             event = ref[j];
-            eventString = event.event_team + " - " + event.event_type + " - " + event.event_player + " - " + event.event_minute;
-            eventTooltipString += eventString + " ---";
+            eventString = '';
+            if (event[DATA.EVENT_TYPE] === DATA.EVENT_TYPE_GOAL) {
+              eventString = "-" + event[DATA.EVENT_PLAYER] + " (" + event[DATA.EVENT_TEAM] + ")- ";
+            }
+            eventTooltipString += eventString;
           }
           return ctrl.eventTooltips.list[ctrl.simulationTime] = eventTooltipString;
         }
@@ -203,7 +218,7 @@
       addPredictionTooltip = function(matchIndex) {
         var i, j, match, predictionTooltipString, ref;
         match = ctrl.matches[matchIndex];
-        predictionTooltipString = match.home_team + " " + match.home_score + " - " + match.away_score + " " + match.away_team + "\n    " + ctrl.predictions[matchIndex].current + " (" + ctrl.simulationTime + " mins).";
+        predictionTooltipString = "-" + match.home_team + " v " + match.away_team + " : " + ctrl.predictions[matchIndex].current + "- ";
         ctrl.predictionTooltips.mostRecent[matchIndex] = predictionTooltipString;
         if (ctrl.predictionTooltips.list[ctrl.simulationTime] === null) {
           return ctrl.predictionTooltips.list[ctrl.simulationTime] = predictionTooltipString;
@@ -211,7 +226,7 @@
           predictionTooltipString = '';
           for (i = j = 0, ref = ctrl.matches.length; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
             if (ctrl.predictions[i].lastChange === ctrl.simulationTime) {
-              predictionTooltipString += ctrl.predictionTooltips.mostRecent[i] + " --- ";
+              predictionTooltipString += ctrl.predictionTooltips.mostRecent[i];
             }
           }
           return ctrl.predictionTooltips.list[ctrl.simulationTime] = predictionTooltipString;

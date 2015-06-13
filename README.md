@@ -9,7 +9,7 @@ Clone the repo, and install with `npm install`.
 
 ##Lint and build
 
-Running `grunt` will lint and compile all `.coffee` files in `app/src` to `app/lib`.
+Running `grunt` will lint and compile all `.coffee` files in `app/scripts/src` to `app/scripts/lib`.
 
 ##Start webserver
 

@@ -1,9 +1,10 @@
 angular.module 'footballAPI'
 
 .factory('DataFormatter', ['DATA', 'TIME', (DATA, TIME) ->
+    dataFormatter = {}
 
     # created a formattedMatch containing the basic information about each match
-    dataFormatterService.processRawMatch = (rawMatch) ->
+    dataFormatter.processRawMatch = (rawMatch) ->
         formattedMatch = {}
         formattedMatch.home_team = rawMatch.match_localteam_name
         formattedMatch.away_team = rawMatch.match_visitorteam_name
@@ -14,7 +15,7 @@ angular.module 'footballAPI'
         return formattedMatch
 
     # edit the supplied formattedMatches and globalEvents data, given the rawData and the current dataTime
-    dataFormatterService.processLiveData = (dataTime, formattedMatches, globalEvents, rawData) ->
+    dataFormatter.processLiveData = (dataTime, formattedMatches, globalEvents, rawData) ->
 
         # for each match, set up the necessary variables
         for i in [0...formattedMatches.length]
@@ -45,6 +46,7 @@ angular.module 'footballAPI'
                 # add the event to the formattedMatch events list
                 formattedMatch.events.push(rawEvent)
                 # add the event to the global events list
+                # TODO - need to add this at the EVENT TIME, not the match time
                 addEventToGlobalEvents(rawEvent, matchTime, globalEvents)
 
             # allowing for missed server responses...
@@ -77,5 +79,5 @@ angular.module 'footballAPI'
         else
             globalEvents[matchTime].push(rawEvent)
 
-    return dataFormatterService
+    return dataFormatter
 ])

@@ -1,20 +1,21 @@
-angular.module 'footballAPI', ['chart.js']
+angular.module 'footballAPI', ['chart.js', 'ngMaterial']
 
 .config(['ChartJsProvider', (ChartJsProvider) ->
     # configure all charts
     ChartJsProvider.setOptions({
-        colours: ['#FF5252', '#FF8A80'],
-        responsive: false,
-        showTooltips: false,
+        colours: ['#3F51B5', '#FF4081']
+        responsive: false
+        showTooltips: false
 
-        scaleOverride: true,
-        scaleSteps: 10,
-        scaleStepWidth: 0.1,
-        scaleStartValue: 0.00,
+        scaleOverride: true
+        scaleSteps: 10
+        scaleStepWidth: 0.1
+        scaleStartValue: 0.00
+        scaleLabel: ' <%=value%>'
     })
     # configure all line charts
     ChartJsProvider.setOptions('Line', {
-        pointDot: false,
+        pointDot: false
         bezierCurve: false
     })
     return

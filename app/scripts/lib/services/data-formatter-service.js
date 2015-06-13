@@ -1,9 +1,9 @@
 (function() {
-  angular.module('footballAPI').factory('DataFormatterService', [
+  angular.module('footballAPI').factory('DataFormatter', [
     'DATA', 'TIME', function(DATA, TIME) {
-      var addEventToGlobalEvents, dataFormatterService, getCurrentResult, getEventTeam, getMatchTime, isSecondHalf;
-      dataFormatterService = {};
-      dataFormatterService.processRawMatch = function(rawMatch) {
+      var addEventToGlobalEvents, dataFormatter, getCurrentResult, getEventTeam, getMatchTime, isSecondHalf;
+      dataFormatter = {};
+      dataFormatter.processRawMatch = function(rawMatch) {
         var formattedMatch;
         formattedMatch = {};
         formattedMatch.home_team = rawMatch.match_localteam_name;
@@ -14,7 +14,7 @@
         formattedMatch.currentResult = [DATA.DRAW];
         return formattedMatch;
       };
-      dataFormatterService.processLiveData = function(dataTime, formattedMatches, globalEvents, rawData) {
+      dataFormatter.processLiveData = function(dataTime, formattedMatches, globalEvents, rawData) {
         var awayScore, formattedMatch, homeScore, i, j, k, l, m, matchTime, rawEvent, rawEventTime, rawEvents, rawMatch, ref, ref1, ref2, ref3, ref4, ref5;
         for (i = k = 0, ref = formattedMatches.length; 0 <= ref ? k < ref : k > ref; i = 0 <= ref ? ++k : --k) {
           rawMatch = rawData.matches[i];
@@ -81,7 +81,7 @@
           return globalEvents[matchTime].push(rawEvent);
         }
       };
-      return dataFormatterService;
+      return dataFormatter;
     }
   ]);
 

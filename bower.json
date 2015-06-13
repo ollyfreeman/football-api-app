@@ -12,6 +12,7 @@
     "TODO.txt"
   ],
   "dependencies": {
-    "angular-chart.js": "~0.7.1"
+    "angular-chart.js": "~0.7.1",
+    "angular-material": "~0.9.8"
   }
 }

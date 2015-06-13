@@ -1,8 +1,8 @@
 (function() {
   angular.module('footballAPI').constant('DATA', {
-    HOME_WIN: 'home',
+    HOME_WIN: 'home win',
     DRAW: 'draw',
-    AWAY_WIN: 'away',
+    AWAY_WIN: 'away win',
     HOME_TEAM: 'localteam',
     AWAY_TEAM: 'visitorteam',
     HT_SCORE: 'match_ht_score',
@@ -15,6 +15,7 @@
     MATCH_TIMER: 'match_timer',
     MATCH_TIMER_FINISHED: '',
     EVENTS: 'match_events',
+    EVENT_PLAYER: 'event_player',
     EVENT_TYPE: 'event_type',
     EVENT_TYPE_GOAL: 'goal',
     EVENT_TIME: 'event_minute',

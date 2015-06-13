@@ -1,23 +1,19 @@
-.prediction-tooltip {
-    display:inline;
+.tooltip {
+    display:block;
     float: left;
     width: 10px;
     height: 10px;
-    background-color: blue
+    background-color: rgba(158,158,158,0.2);
 }
 
 .prediction-occured {
-    background-color: red
-}
-
-.event-tooltip {
-    display:inline;
-    float: left;
-    width: 10px;
-    height: 10px;
-    background-color: green
+    background-color: #FF4081;
 }
 
 .event-occurred {
-    background-color: black
+    background-color: #FF4081;
+}
+
+.github-icon {
+    margin-top: 10px;
 }

@@ -1,6 +1,6 @@
 (function() {
-  angular.module('footballAPI').factory('DataService', [
-    'DataFormatterService', '$http', '$interval', '$q', '$timeout', 'TIME', 'URL', function(DataFormatterService, $http, $interval, $q, $timeout, TIME, URL) {
+  angular.module('footballAPI').factory('Data', [
+    'DataFormatter', '$http', '$interval', '$q', '$timeout', 'TIME', 'URL', function(DataFormatter, $http, $interval, $q, $timeout, TIME, URL) {
       var dataService, executeAndNewInterval, stopFetching;
       dataService = {};
       dataService.time = TIME.INITIAL_TIME;
@@ -12,7 +12,7 @@
             var i, len, match;
             for (i = 0, len = data.length; i < len; i++) {
               match = data[i];
-              dataService.matches.push(DataFormatterService.processRawMatch(match));
+              dataService.matches.push(DataFormatter.processRawMatch(match));
             }
             return resolve();
           }).error(function(data, status) {
@@ -31,7 +31,7 @@
             getSimulationUpdateURL = "" + URL.GET_SIMULATON_UPDATE_PREFIX + tokenId;
             return intervalId = executeAndNewInterval(lengthOfSimulatedMinute, function() {
               return $http.get(getSimulationUpdateURL).success(function(data, status) {
-                dataService.time = DataFormatterService.processLiveData(dataService.time, dataService.matches, dataService.globalEvents, data);
+                dataService.time = DataFormatter.processLiveData(dataService.time, dataService.matches, dataService.globalEvents, data);
                 resolve();
                 if (dataService.time >= TIME.SECONDHALF_END) {
                   return stopFetching(intervalId);
