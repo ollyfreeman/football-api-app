@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="./styles/styles.css">
 </head>
 
-<body ng-controller='MatchController as matchCtrl' layout="column" layout-fill>
+<body layout="column" layout-fill>
 
   <md-toolbar md-scroll-shrink id="fapi-header">
     <app-toolbar></app-toolbar>
@@ -20,11 +20,9 @@
   <md-content class="md-padding">
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="GAME">
-        <md-content class="md-padding" layout="column">
+        <md-content class="md-padding" layout="column" ng-controller='MatchController as matchCtrl'>
 
           <h1 class="md-display-2">GAME</h1>
-
-          <p>Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro Game intro </p>
 
           <div layout="row" layout-wrap>
           <div ng-repeat='match in matchCtrl.matches' flex="50">
@@ -38,7 +36,7 @@
           </div>
           </div>
 
-          <md-button ng-click='matchCtrl.startSimulation()' ng-disabled="!matchCtrl.simulationReady">START GAME</md-button>
+          <md-button ng-click='matchCtrl.startSimulation()' ng-disabled="!matchCtrl.simulationReady">{{matchCtrl.buttonText}}</md-button>
 
           <div style="margin:auto">
             <canvas id="lineChart" class="chart chart-line" data="matchCtrl.graphData" labels="matchCtrl.graphLabels" width="1090px" height="200px"></canvas>
@@ -71,6 +69,12 @@
               </div>
             </div>
           </div>
+
+          <div layout="row" layout-align="center">
+            <p layout-align="center center">Player Score</p>
+          </div>
+
+          <h3 layout-align="center center" style="margin:auto">{{matchCtrl.currentPlayerScore | number:1}}</h3>
 
         </md-content>
       </md-tab>

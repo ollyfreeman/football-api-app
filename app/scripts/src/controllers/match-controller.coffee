@@ -4,6 +4,7 @@ angular.module 'footballAPI'
 
     ctrl = this
     ctrl.simulationReady = false
+    ctrl.buttonText = 'GETTING MATCH INFORMATION'
     ctrl.simulationTime = 0
     ctrl.matchSpeed = 60
 
@@ -19,6 +20,7 @@ angular.module 'footballAPI'
     ctrl.eventTooltips = {}
     # player score for every time slot
     ctrl.playerScore = []
+    ctrl.currentPlayerScore = 0
     # data used for angular-chart
     ctrl.graphData = []
     # labels for angular-chart
@@ -38,14 +40,17 @@ angular.module 'footballAPI'
         initialiseGraphData()
         initialiseGraphAndTooltipLabels()
         ctrl.simulationReady = true
+        ctrl.buttonText = 'START'
     , () ->
-        console.log(':(')
+        ctrl.buttonText = 'UNABLE TO FETCH MATCH INFORMATION'
 
     # start the simulation
     ctrl.startSimulation = () ->
         lengthOfSimulatedMinute = TIME.SIXTY_SECONDS/ctrl.matchSpeed
 
         Data.startMatch(ctrl.matchSpeed).then () ->
+            ctrl.simulationReady = false
+            ctrl.buttonText = 'IN PROGRESS'
             # execute once per simulated minute
             intervalId = newInterval(lengthOfSimulatedMinute, () ->
 
@@ -70,7 +75,8 @@ angular.module 'footballAPI'
                 ctrl.simulationTime += 1
             )
         , () ->
-            console.log(':(')
+            ctrl.simulationReady = false
+            ctrl.buttonText ='UNABLE TO FETCH MATCH INFORMATION'
 
     # change the current prediction for a given match
     ctrl.changePrediction = (prediction, matchIndex) ->
@@ -123,7 +129,8 @@ angular.module 'footballAPI'
 
     finishSimulation = (intervalId) ->
         $interval.cancel(intervalId)
-        console.log 'Match Finished.'
+        ctrl.simulationReady = false
+        ctrl.buttonText = 'GAME FINISHED'
 
     addEventTooltip = () ->
         if ctrl.globalEvents[ctrl.simulationTime]
@@ -144,8 +151,9 @@ angular.module 'footballAPI'
             prediction = ctrl.predictions[i]
             match = ctrl.matches[i]
             predictionWasCorrect = prediction.list[ctrl.simulationTime] is match.currentResult[ctrl.simulationTime]
-            totalScore += ((finalNumberOfPredictions - prediction.lastChange)/finalNumberOfPredictions) * predictionWasCorrect
+            totalScore += ((finalNumberOfPredictions - prediction.lastChange)/finalNumberOfPredictions) * predictionWasCorrect * 100
         ctrl.playerScore[ctrl.simulationTime] = totalScore / numberOfMatches
+        ctrl.currentPlayerScore = ctrl.playerScore[ctrl.simulationTime]
 
     formatCurrentResults = () ->
         for match in ctrl.matches

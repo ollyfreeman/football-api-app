@@ -9,8 +9,8 @@ angular.module 'footballAPI', ['chart.js', 'ngMaterial']
 
         scaleOverride: true
         scaleSteps: 5
-        scaleStepWidth: 0.2
-        scaleStartValue: 0.00
+        scaleStepWidth: 20
+        scaleStartValue: 0
         scaleLabel: ' <%=value%>'
     })
     # configure all line charts
