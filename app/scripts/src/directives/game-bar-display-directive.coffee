@@ -6,7 +6,7 @@ angular.module 'footballAPI'
         restrict: 'E'
         templateUrl: './templates/game-bar-display-template.html'
         scope: {
-            title: '@'
+            description: '@'
         }
         controller: 'GameBarDisplayController'
         controllerAs: 'gameBarDisplayCtrl'

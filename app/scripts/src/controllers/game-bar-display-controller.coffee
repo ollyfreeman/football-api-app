@@ -6,9 +6,9 @@ angular.module 'footballAPI'
 
     ctrl = this
 
-    ctrl.title = $scope.title
+    ctrl.barTitle = $scope.description
 
-    if ctrl.title is 'Predictions'
+    if ctrl.barTitle is 'Predictions'
         ctrl.tooltips = Prediction.predictionTooltips.list
     else
         ctrl.tooltips = GlobalEvents.eventTooltips.list
