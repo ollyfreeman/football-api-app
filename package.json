@@ -3,10 +3,12 @@
   "version": "0.0.1",
   "description": "Web app using the football-api-mock API",
   "author": "Olly Freeman",
+  "repository" : "https://github.com/ollyfreeman/football-api-app",
   "devDependencies": {
     "grunt-contrib-watch": "^0.6.1"
   },
   "dependencies": {
+    "bower": "^1.4.1",
     "coffeelint": "^1.10.1",
     "grunt": "^0.4.5",
     "grunt-coffeelint": "0.0.13",
