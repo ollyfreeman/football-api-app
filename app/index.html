@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html lang='en' ng-app='footballAPI'>
 <head>
+
   <meta charset='utf-8'>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+
   <title>FOOTBALL-API APP</title>
+
   <meta name='description' content=''>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+  <!-- Styles -->
   <link rel='stylesheet' href='../../bower_components/angular-chart.js/dist/angular-chart.css'>
   <link rel='stylesheet' href='../../bower_components/angular-material/angular-material.css'>
   <link rel='stylesheet' href='./styles/styles.css'>
+
 </head>
 
 <body layout='column' layout-fill>
 
+  <!-- Header -->
   <md-toolbar md-scroll-shrink id='fapi-header'>
     <app-toolbar></app-toolbar>
   </md-toolbar>
 
+  <!-- Main content -->
   <md-content class='md-padding'>
     <md-tabs md-dynamic-height md-border-bottom>
 
+      <!-- GAME tab -->
       <md-tab label='GAME'>
         <md-content class='md-padding' layout='column' ng-controller='GameController as gameCtrl'>
 
@@ -40,25 +49,34 @@
         </md-content>
       </md-tab>
 
+      <!-- RULES tab -->
       <md-tab label='RULES'>
         <md-content class='md-padding'>
+
           <rules-tab-content></rules-tab-content>
+
         </md-content>
       </md-tab>
 
+      <!-- API tab -->
       <md-tab label='API'>
         <md-content class='md-padding'>
+
           <api-tab-content></api-tab-content>
+
         </md-content>
       </md-tab>
 
     </md-tabs>
   </md-content>
 
+  <!-- Footer -->
   <md-toolbar id='fapi-footer'>
     <app-footer></app-footer>
   </md-toolbar>
 
+  <!-- Scripts -->
   <script type='text/javascript' src='./scripts/football-api-app.min.js'></script>
+
 </body>
 </html>
