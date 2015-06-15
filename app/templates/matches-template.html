@@ -1,5 +1,5 @@
-<div layout="row" layout-sm="column" layout-wrap>
-  <div ng-repeat='match in gameCtrl.matches' flex="50">
+<div layout="row" layout-md="column" layout-wrap>
+  <div ng-repeat="match in gameCtrl.matches" class="fapi-match-row">
     <div layout="row" layout-align="center">
       <md-button ng-class="{'md-accent': gameCtrl.predictions[$index].current === 'home win'}" class="fapi-team-button" ng-click="gameCtrl.changePrediction('home win', $index)">{{match.home_team}}</md-button>
       <h3>{{match.home_score}}</h3>

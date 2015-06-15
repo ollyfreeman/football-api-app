@@ -1,8 +1,8 @@
-<div layout="row" layout-align="center">
+<div layout="row" layout-align="center" hide-md>
   <p layout-align="center center">{{gameBarDisplayCtrl.barTitle}}</p>
 </div>
 
-<div layout="row">
+<div layout="row" hide-md>
   <div class="fapi-game-bar-offset"></div>
   <div ng-repeat='tooltip in gameBarDisplayCtrl.tooltips track by $index'>
     <div ng-class="{ 'fapi-event-occurred': tooltip }" class="fapi-tooltip" ng-click="gameBarDisplayCtrl.go()">

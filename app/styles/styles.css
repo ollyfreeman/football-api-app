@@ -7,16 +7,25 @@ game-score h3 {
     margin-top: 0;
 }
 
-.fapi-game-bar-offset {
-    width: : 20px;
-}
-
 .fapi-bottom-offset {
     height: 80px;
 }
 
+.fapi-game-bar-offset {
+    width: 20px;
+}
+
+.fapi-header-button {
+    min-width: 50px;
+}
+
+.fapi-match-row {
+    margin: auto;
+}
+
 .fapi-team-button {
-    min-width: 200px;
+    width: 200px;
+    text-overflow: ellipsis;
 }
 
 .fapi-text-block {
@@ -42,6 +51,49 @@ game-score h3 {
     padding-top: 4px;
 }
 
+#fapi-graph {
+    width: 1090px;
+    height: 200px;
+}
+
 #fapi-github-icon, #fapi-linkedin-icon {
     margin-top: 10px;
+}
+
+@media only screen and (max-width: 1200px) {
+
+.fapi-game-bar-offset {
+    width: 25px;
+}
+
+.fapi-tooltip {
+    width: 8px;
+}
+
+#fapi-graph {
+    width: 880px;
+}
+}
+
+@media only screen and (max-width: 600px) {
+
+.fapi-team-button {
+    width: 150px;
+}
+
+.fapi-vs-button {
+    width: 25px;
+}
+}
+
+@media only screen and (max-width: 600px) {
+
+.fapi-team-button {
+    width: 120px;
+    font-size: 10px;
+}
+
+p, li {
+    font-size: 10px;
+}
 }
