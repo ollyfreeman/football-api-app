@@ -9,7 +9,7 @@ Clone the repo, and install with `npm install` and then `bower install`.
 
 ##Lint and build
 
-Running `grunt` will lint and compile all `.coffee` files in `app/scripts/src`.
+Running `grunt` will lint, compile and concatenate all `.coffee` files in `app/scripts/src`.
 
 ##Start webserver
 
