@@ -60,7 +60,10 @@ angular.module 'footballAPI'
     GET_INITIAL_MATCH_INFO: 'http://localhost:8080/api/?Action=matches'
     START_SIMULATON_PREFIX: 'http://localhost:8080/api/?Action=start&matchspeed='
     GET_SIMULATON_UPDATE_PREFIX: 'http://localhost:8080/api/?Action=today&tokenId='
-    GITHUB: 'https://github.com/ollyfreeman/football-api-app'
+    GITHUB_API: 'https://github.com/ollyfreeman/football-api-mock'
+    GITHUB_API_README: 'http://api.github.com/repos/ollyfreeman/football-api-mock/readme'
+    GITHUB_APP: 'https://github.com/ollyfreeman/football-api-app'
     LINKEDIN: 'https://www.linkedin.com/profile/view?id=217892821'
+    FOOTBALL_API: 'http://www.football-api.com'
 }
 

@@ -11,8 +11,16 @@ game-score h3 {
     width: : 20px;
 }
 
+.fapi-bottom-offset {
+    height: 80px;
+}
+
 .fapi-team-button {
     min-width: 200px;
+}
+
+.fapi-text-block {
+    margin: 0 10%;
 }
 
 .fapi-tooltip {

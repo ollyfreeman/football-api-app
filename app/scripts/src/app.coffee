@@ -1,4 +1,4 @@
-angular.module 'footballAPI', ['chart.js', 'ngMaterial']
+angular.module 'footballAPI', ['chart.js', 'ngMaterial', 'ngSanitize']
 
 .config(['ChartJsProvider', (ChartJsProvider) ->
     # configure all charts

@@ -1,28 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" ng-app='footballAPI'>
+<html lang='en' ng-app='footballAPI'>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <title>FOOTBALL-API APP</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../../bower_components/angular-chart.js/dist/angular-chart.css">
-  <link rel="stylesheet" href="../../bower_components/angular-material/angular-material.css">
-  <link rel="stylesheet" href="./styles/styles.css">
+  <meta name='description' content=''>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' href='../../bower_components/angular-chart.js/dist/angular-chart.css'>
+  <link rel='stylesheet' href='../../bower_components/angular-material/angular-material.css'>
+  <link rel='stylesheet' href='./styles/styles.css'>
 </head>
 
-<body layout="column" layout-fill>
+<body layout='column' layout-fill>
 
-  <md-toolbar md-scroll-shrink id="fapi-header">
+  <md-toolbar md-scroll-shrink id='fapi-header'>
     <app-toolbar></app-toolbar>
   </md-toolbar>
 
-  <md-content class="md-padding">
+  <md-content class='md-padding'>
     <md-tabs md-dynamic-height md-border-bottom>
-      <md-tab label="GAME">
-        <md-content class="md-padding" layout="column" ng-controller='GameController as gameCtrl'>
 
-          <h1 class="md-display-2">GAME</h1>
+      <md-tab label='GAME'>
+        <md-content class='md-padding' layout='column' ng-controller='GameController as gameCtrl'>
+
+          <h1 class='md-display-2'>GAME</h1>
 
           <game-matches></game-matches>
 
@@ -30,66 +31,71 @@
 
           <game-graph></game-graph>
 
-          <game-bar-display description="Predictions"></game-bar-display>
+          <game-bar-display description='Predictions'></game-bar-display>
 
-          <game-bar-display description="Goals"></game-bar-display>
+          <game-bar-display description='Goals'></game-bar-display>
 
           <game-score></game-score>
 
         </md-content>
       </md-tab>
 
-      <md-tab label="RULES">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Tab Two</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum enim, vel tempor sapien arcu a tellus. Vivamus convallis sodales ante varius gravida. Curabitur a purus vel augue ultrices ultricies id a nisl. Nullam malesuada consequat diam, a facilisis tortor volutpat et. Sed urna dolor, aliquet vitae posuere vulputate, euismod ac lorem. Sed felis risus, pulvinar at interdum quis, vehicula sed odio. Phasellus in enim venenatis, iaculis tortor eu, bibendum ante. Donec ac tellus dictum neque volutpat blandit. Praesent efficitur faucibus risus, ac auctor purus porttitor vitae. Phasellus ornare dui nec orci posuere, nec luctus mauris semper.</p>
-          <p>Morbi viverra, ante vel aliquet tincidunt, leo dolor pharetra quam, at semper massa orci nec magna. Donec posuere nec sapien sed laoreet. Etiam cursus nunc in condimentum facilisis. Etiam in tempor tortor. Vivamus faucibus egestas enim, at convallis diam pulvinar vel. Cras ac orci eget nisi maximus cursus. Nunc urna libero, viverra sit amet nisl at, hendrerit tempor turpis. Maecenas facilisis convallis mi vel tempor. Nullam vitae nunc leo. Cras sed nisl consectetur, rhoncus sapien sit amet, tempus sapien.</p>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+      <md-tab label='RULES'>
+        <md-content class='md-padding'>
+          <rules-tab-content></rules-tab-content>
         </md-content>
       </md-tab>
-      <md-tab label="API">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Tab Three</h1>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+
+      <md-tab label='API'>
+        <md-content class='md-padding'>
+          <api-tab-content></api-tab-content>
         </md-content>
       </md-tab>
+
     </md-tabs>
   </md-content>
 
-  <md-toolbar id="fapi-footer">
+  <md-toolbar id='fapi-footer'>
     <app-footer></app-footer>
   </md-toolbar>
 
-  <script src="../../bower_components/angular/angular.min.js"></script>
-  <script src="../../bower_components/Chart.js/Chart.min.js"></script>
-  <script src="../../bower_components/angular-chart.js/dist/angular-chart.js"></script>
-  <script src="../../bower_components/angular-aria/angular-aria.js"></script>
-  <script src="../../bower_components/angular-animate/angular-animate.js"></script>
-  <script src="../../bower_components/angular-material/angular-material.js"></script>
+  <script src='../bower_components/angular/angular.min.js'></script>
+  <script src='../bower_components/Chart.js/Chart.min.js'></script>
+  <script src='../bower_components/angular-aria/angular-aria.min.js'></script>
+  <script src='../bower_components/angular-animate/angular-animate.min.js'></script>
+  <script src='../bower_components/angular-chart.js/dist/angular-chart.min.js'></script>
+  <script src='../bower_components/angular-material/angular-material.min.js'></script>
+  <script src='../bower_components/angular-sanitize/angular-sanitize.min.js'></script>
 
-  <script type="text/javascript" src="./scripts/lib/app.js"></script>
+  <script src='../vendors/markdown.js'></script>
 
-  <script type="text/javascript" src="./scripts/lib/controllers/game-controller.js"></script>
-  <script type="text/javascript" src="./scripts/lib/controllers/header-controller.js"></script>
-  <script type="text/javascript" src="./scripts/lib/controllers/game-bar-display-controller.js"></script>
-  <script type="text/javascript" src="./scripts/lib/controllers/graph-controller.js"></script>
+  <script type='text/javascript' src='./scripts/lib/app.js'></script>
 
-  <script type="text/javascript" src="./scripts/lib/directives/footer-directive.js"></script>
-  <script type="text/javascript" src="./scripts/lib/directives/game-bar-display-directive.js"></script>
-  <script type="text/javascript" src="./scripts/lib/directives/game-button-directive.js"></script>
-  <script type="text/javascript" src="./scripts/lib/directives/game-score-directive.js"></script>
-  <script type="text/javascript" src="./scripts/lib/directives/graph-directive.js"></script>
-  <script type="text/javascript" src="./scripts/lib/directives/header-directive.js"></script>
-  <script type="text/javascript" src="./scripts/lib/directives/matches-directive.js"></script>
+  <script type='text/javascript' src='./scripts/lib/controllers/api-tab-content-controller.js'></script>
+  <script type='text/javascript' src='./scripts/lib/controllers/game-controller.js'></script>
+  <script type='text/javascript' src='./scripts/lib/controllers/header-controller.js'></script>
+  <script type='text/javascript' src='./scripts/lib/controllers/game-bar-display-controller.js'></script>
+  <script type='text/javascript' src='./scripts/lib/controllers/graph-controller.js'></script>
+  <script type='text/javascript' src='./scripts/lib/controllers/rules-tab-content-controller.js'></script>
 
-  <script type="text/javascript" src="./scripts/lib/services/data-formatter-service.js"></script>
-  <script type="text/javascript" src="./scripts/lib/services/data-service.js"></script>
-  <script type="text/javascript" src="./scripts/lib/services/global-events-service.js"></script>
-  <script type="text/javascript" src="./scripts/lib/services/graph-service.js"></script>
-  <script type="text/javascript" src="./scripts/lib/services/label-service.js"></script>
-  <script type="text/javascript" src="./scripts/lib/services/player-score-service.js"></script>
-  <script type="text/javascript" src="./scripts/lib/services/prediction-service.js"></script>
+  <script type='text/javascript' src='./scripts/lib/directives/api-tab-content-directive.js'></script>
+  <script type='text/javascript' src='./scripts/lib/directives/footer-directive.js'></script>
+  <script type='text/javascript' src='./scripts/lib/directives/game-bar-display-directive.js'></script>
+  <script type='text/javascript' src='./scripts/lib/directives/game-button-directive.js'></script>
+  <script type='text/javascript' src='./scripts/lib/directives/game-score-directive.js'></script>
+  <script type='text/javascript' src='./scripts/lib/directives/graph-directive.js'></script>
+  <script type='text/javascript' src='./scripts/lib/directives/header-directive.js'></script>
+  <script type='text/javascript' src='./scripts/lib/directives/matches-directive.js'></script>
+  <script type='text/javascript' src='./scripts/lib/directives/rules-tab-content-directive.js'></script>
 
-  <script type="text/javascript" src="./scripts/lib/constants/constants.js"></script>
+  <script type='text/javascript' src='./scripts/lib/services/data-formatter-service.js'></script>
+  <script type='text/javascript' src='./scripts/lib/services/data-service.js'></script>
+  <script type='text/javascript' src='./scripts/lib/services/global-events-service.js'></script>
+  <script type='text/javascript' src='./scripts/lib/services/graph-service.js'></script>
+  <script type='text/javascript' src='./scripts/lib/services/label-service.js'></script>
+  <script type='text/javascript' src='./scripts/lib/services/player-score-service.js'></script>
+  <script type='text/javascript' src='./scripts/lib/services/prediction-service.js'></script>
+
+  <script type='text/javascript' src='./scripts/lib/constants/constants.js'></script>
 </body>
 </html>
