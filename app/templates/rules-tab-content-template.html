@@ -1,5 +1,6 @@
 <h1 class='md-display-2'>RULES</h1>
 <div class='fapi-text-block'>
+
   <h3>Introduction</h3>
   <p>This game is designed to prototype a new gambling application that takes inspiration from
   classic British football 'Pools' betting. The final product would use live updates from
@@ -18,11 +19,26 @@
     <li>Click START.</li>
     <li>As the simulation proceeds, you can change your predictions. It is only your most recent prediction for
     each match that counts towards your score - but note that the later in this prediction happened, the fewer
-    points you receive if your prediction is correct. The graph displays your current score, which will change as
-    goals as scored and as you change you predictions. </li>
+    points you receive if your prediction is correct (see 'Scoring' below). The graph displays your current score,
+    which will change as goals as scored and as you change you predictions. </li>
   </ol>
+
+  <h3>Scoring</h3>
+  <p>The scoring system for the game is as follows:</p>
+  <ul>
+    <li>The maximum possible score for all the matches combined is 100, the minimum score is 0.</li>
+    <li>If your prediction for a match is incorrect, you receive a score of 0 for that match.</li>
+    <li>If your prediction for a match is correct, you recieve a percentage of the maximum possible score for
+    that match, depending on when that prediction was made.</li>
+  </ul>
+  <p>For example, say Arsenal are playing against Manchester United and say that two thirds of the way through
+  the match you predict that Arsenal will win. Therefore, if Arsenal go on to to win you will receive one third
+  of the maximum possible points for that game. However, if Arsenal don't win then you receive 0 points
+  for that game.<p>
+
   <h3>Match data</h3>
   <p>The simulated match data is from the Premier League matches played on the final day of the 2014-2015
   season, on Sunday 24th May 2015.</p>
+
 </div>
 <div class='fapi-bottom-offset'></div>
