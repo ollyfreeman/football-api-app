@@ -1,9 +1,9 @@
 angular.module 'footballAPI'
 
 .controller('GameController'\
-, [ 'Data', 'GlobalEvents', 'Graph', 'PlayerScore', 'Prediction'
+, [ 'Data', 'GlobalEvents', 'Graph', 'Labels', 'PlayerScore', 'Prediction'
 , '$interval', 'BUTTON', 'CONFIG', 'TIME'
-, (Data, GlobalEvents, Graph, PlayerScore, Prediction, $interval, BUTTON, CONFIG, TIME) ->
+, (Data, GlobalEvents, Graph, Labels, PlayerScore, Prediction, $interval, BUTTON, CONFIG, TIME) ->
 
     ctrl = this
     ctrl.simulationTime = 0
@@ -33,7 +33,8 @@ angular.module 'footballAPI'
 
         Data.startMatch(ctrl.matchSpeed).then () ->
             ctrl.simulationReady = false
-            ctrl.buttonText = BUTTON.IN_PROGRESS
+            ctrl.buttonText = getTimeLabel(ctrl.simulationTime)
+
             # execute once per simulated minute
             intervalId = newInterval(lengthOfSimulatedMinute, () ->
 
@@ -56,6 +57,8 @@ angular.module 'footballAPI'
 
                 # increase the simulation time
                 ctrl.simulationTime += 1
+
+                ctrl.buttonText = getTimeLabel(ctrl.simulationTime)
             )
         , () ->
             ctrl.simulationReady = false
@@ -75,6 +78,16 @@ angular.module 'footballAPI'
         ctrl.simulationReady = false
         ctrl.buttonText = BUTTON.FINISHED
         $interval.cancel(intervalId)
+
+    getTimeLabel = (time) ->
+        [mins, half] = (Labels.tooltipLabels[time]).split(' ')
+        if half is 'FH'
+            half = "First Half ('FH')"
+        else if half is 'SH'
+            half = "Second Half ('SH')"
+        else
+            half = "Half Time ('HT')"
+        "#{mins} mins, #{half}"
 
     return ctrl
 ])

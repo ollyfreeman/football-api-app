@@ -2151,7 +2151,6 @@ function merge_text_nodes( jsonml ) {
   angular.module('footballAPI').constant('BUTTON', {
     PRE_START: 'GETTING MATCH INFORMATION',
     START: 'START',
-    IN_PROGRESS: 'IN PROGRESS',
     FINISHED: 'GAME FINISHED',
     ERROR_START: 'UNABLE TO FETCH MATCH INFORMATION - TRY LATER',
     ERROR_GAME: 'SIMULATION CANCELLED - UNABLE TO FETCH MATCH INFORMATION'
@@ -2191,9 +2190,9 @@ function merge_text_nodes( jsonml ) {
     SECONDHALF_END: 106,
     SIXTY_SECONDS: 60000
   }).constant('URL', {
-    GET_INITIAL_MATCH_INFO: 'http://localhost:8080/api/?Action=matches',
-    START_SIMULATON_PREFIX: 'http://localhost:8080/api/?Action=start&matchspeed=',
-    GET_SIMULATON_UPDATE_PREFIX: 'http://localhost:8080/api/?Action=today&tokenId=',
+    GET_INITIAL_MATCH_INFO: 'http://104.236.187.56/api/?Action=matches',
+    START_SIMULATON_PREFIX: 'http://104.236.187.56/api/?Action=start&matchspeed=',
+    GET_SIMULATON_UPDATE_PREFIX: 'http://104.236.187.56/api/?Action=today&tokenId=',
     GITHUB_API: 'https://github.com/ollyfreeman/football-api-mock',
     GITHUB_API_README: 'http://api.github.com/repos/ollyfreeman/football-api-mock/readme',
     GITHUB_APP: 'https://github.com/ollyfreeman/football-api-app',
@@ -2245,8 +2244,8 @@ function merge_text_nodes( jsonml ) {
 ;
 (function() {
   angular.module('footballAPI').controller('GameController', [
-    'Data', 'GlobalEvents', 'Graph', 'PlayerScore', 'Prediction', '$interval', 'BUTTON', 'CONFIG', 'TIME', function(Data, GlobalEvents, Graph, PlayerScore, Prediction, $interval, BUTTON, CONFIG, TIME) {
-      var ctrl, finishSimulation, newInterval;
+    'Data', 'GlobalEvents', 'Graph', 'Labels', 'PlayerScore', 'Prediction', '$interval', 'BUTTON', 'CONFIG', 'TIME', function(Data, GlobalEvents, Graph, Labels, PlayerScore, Prediction, $interval, BUTTON, CONFIG, TIME) {
+      var ctrl, finishSimulation, getTimeLabel, newInterval;
       ctrl = this;
       ctrl.simulationTime = 0;
       ctrl.matchSpeed = CONFIG.MATCH_SPEED;
@@ -2271,7 +2270,7 @@ function merge_text_nodes( jsonml ) {
         return Data.startMatch(ctrl.matchSpeed).then(function() {
           var intervalId;
           ctrl.simulationReady = false;
-          ctrl.buttonText = BUTTON.IN_PROGRESS;
+          ctrl.buttonText = getTimeLabel(ctrl.simulationTime);
           return intervalId = newInterval(lengthOfSimulatedMinute, function() {
             if (ctrl.simulationTime >= TIME.SECONDHALF_END) {
               finishSimulation(intervalId);
@@ -2280,7 +2279,8 @@ function merge_text_nodes( jsonml ) {
             Prediction.recordPrediction(ctrl.simulationTime);
             GlobalEvents.addEventTooltip(ctrl.simulationTime);
             PlayerScore.calculatePlayerScore(ctrl.simulationTime);
-            return ctrl.simulationTime += 1;
+            ctrl.simulationTime += 1;
+            return ctrl.buttonText = getTimeLabel(ctrl.simulationTime);
           });
         }, function() {
           ctrl.simulationReady = false;
@@ -2297,6 +2297,18 @@ function merge_text_nodes( jsonml ) {
         ctrl.simulationReady = false;
         ctrl.buttonText = BUTTON.FINISHED;
         return $interval.cancel(intervalId);
+      };
+      getTimeLabel = function(time) {
+        var half, mins, ref;
+        ref = Labels.tooltipLabels[time].split(' '), mins = ref[0], half = ref[1];
+        if (half === 'FH') {
+          half = "First Half ('FH')";
+        } else if (half === 'SH') {
+          half = "Second Half ('SH')";
+        } else {
+          half = "Half Time ('HT')";
+        }
+        return mins + " mins, " + half;
       };
       return ctrl;
     }

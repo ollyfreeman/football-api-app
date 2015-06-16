@@ -1,11 +1,11 @@
 <div layout="row" layout-align="center" hide-md>
-  <p layout-align="center center">{{gameBarDisplayCtrl.barTitle}}</p>
+  <p layout-align="center center" class="fapi-game-subtitle">{{gameBarDisplayCtrl.barTitle}}</p>
 </div>
 
 <div layout="row" hide-md>
   <div class="fapi-game-bar-offset"></div>
   <div ng-repeat='tooltip in gameBarDisplayCtrl.tooltips track by $index'>
-    <div ng-class="{ 'fapi-event-occurred': tooltip }" class="fapi-tooltip" ng-click="gameBarDisplayCtrl.go()">
+    <div ng-class="{ 'fapi-event-occurred': tooltip, 'fapi-tooltip-halftime': (($index > 45) && ($index < 62)) }" class="fapi-tooltip" ng-click="gameBarDisplayCtrl.go()">
       <md-tooltip md-direction="top" ng-show="tooltip">{{gameBarDisplayCtrl.tooltipLabels[$index]}}</md-tooltip>
       <md-tooltip md-direction="bottom" ng-show="tooltip">{{tooltip}}</md-tooltip>
     </div>

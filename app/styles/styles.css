@@ -2,6 +2,15 @@ game-bar-display, game-button, game-graph, game-score {
     margin: auto;
 }
 
+game-button {
+    margin-top: 20px;
+}
+
+game-graph {
+    background-image: url('../img/graph-background-1090.png');
+    margin-top: 20px;
+}
+
 game-score h3 {
     text-align: center;
     margin-top: 0;
@@ -13,6 +22,10 @@ game-score h3 {
 
 .fapi-game-bar-offset {
     width: 20px;
+}
+
+.fapi-game-subtitle, #fapi-game-button {
+    margin-left: 35px;
 }
 
 .fapi-header-button {
@@ -35,7 +48,11 @@ game-score h3 {
 .fapi-tooltip {
     width: 10px;
     height: 10px;
-    background-color: rgba(158,158,158,0.2);
+    background-color: rgb(235,235,235);
+}
+
+.fapi-tooltip-halftime {
+    background-color: rgb(212,212,212);
 }
 
 .fapi-event-occurred {
@@ -62,6 +79,11 @@ game-score h3 {
 
 @media only screen and (max-width: 1200px) {
 
+game-graph {
+    background-image: url('../img/graph-background-880.png');
+    margin-top: 20px;
+}
+
 .fapi-game-bar-offset {
     width: 25px;
 }
@@ -76,6 +98,13 @@ game-score h3 {
 }
 
 @media only screen and (max-width: 1050px) {
+
+.fapi-game-subtitle, #fapi-game-button {
+    margin-left: 0;
+}
+}
+
+@media only screen and (max-width: 960px) {
 
 .fapi-team-button {
     width: 150px;

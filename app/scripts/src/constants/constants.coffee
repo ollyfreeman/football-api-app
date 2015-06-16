@@ -3,7 +3,6 @@ angular.module 'footballAPI'
 .constant 'BUTTON', {
     PRE_START: 'GETTING MATCH INFORMATION'
     START: 'START'
-    IN_PROGRESS: 'IN PROGRESS'
     FINISHED: 'GAME FINISHED'
     ERROR_START: 'UNABLE TO FETCH MATCH INFORMATION - TRY LATER'
     ERROR_GAME: 'SIMULATION CANCELLED - UNABLE TO FETCH MATCH INFORMATION'
@@ -57,9 +56,9 @@ angular.module 'footballAPI'
 }
 
 .constant 'URL', {
-    GET_INITIAL_MATCH_INFO: 'http://localhost:8080/api/?Action=matches'
-    START_SIMULATON_PREFIX: 'http://localhost:8080/api/?Action=start&matchspeed='
-    GET_SIMULATON_UPDATE_PREFIX: 'http://localhost:8080/api/?Action=today&tokenId='
+    GET_INITIAL_MATCH_INFO: 'http://104.236.187.56/api/?Action=matches'
+    START_SIMULATON_PREFIX: 'http://104.236.187.56/api/?Action=start&matchspeed='
+    GET_SIMULATON_UPDATE_PREFIX: 'http://104.236.187.56/api/?Action=today&tokenId='
     GITHUB_API: 'https://github.com/ollyfreeman/football-api-mock'
     GITHUB_API_README: 'http://api.github.com/repos/ollyfreeman/football-api-mock/readme'
     GITHUB_APP: 'https://github.com/ollyfreeman/football-api-app'
