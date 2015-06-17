@@ -2360,7 +2360,7 @@ function merge_text_nodes( jsonml ) {
     return {
       restrict: 'E',
       replace: false,
-      templateUrl: './templates/api-tab-content-template.html',
+      templateUrl: './app/templates/api-tab-content-template.html',
       controller: 'ApiTabContentController',
       controllerAs: 'apiTabCtrl'
     };
@@ -2373,7 +2373,7 @@ function merge_text_nodes( jsonml ) {
     return {
       restrict: 'E',
       replace: true,
-      templateUrl: './templates/footer-template.html'
+      templateUrl: './app/templates/footer-template.html'
     };
   });
 
@@ -2384,7 +2384,7 @@ function merge_text_nodes( jsonml ) {
     'Labels', 'GlobalEvents', function(Labels, GlobalEvents) {
       return {
         restrict: 'E',
-        templateUrl: './templates/game-bar-display-template.html',
+        templateUrl: './app/templates/game-bar-display-template.html',
         scope: {
           description: '@'
         },
@@ -2400,7 +2400,7 @@ function merge_text_nodes( jsonml ) {
   angular.module('footballAPI').directive('gameButton', function() {
     return {
       restrict: 'E',
-      templateUrl: './templates/game-button-template.html'
+      templateUrl: './app/templates/game-button-template.html'
     };
   });
 
@@ -2411,7 +2411,7 @@ function merge_text_nodes( jsonml ) {
     'PlayerScore', function(PlayerScore) {
       return {
         restrict: 'E',
-        templateUrl: './templates/game-score-template.html',
+        templateUrl: './app/templates/game-score-template.html',
         controller: function() {
           this.playerScore = PlayerScore.currentPlayerScore;
           return this;
@@ -2427,7 +2427,7 @@ function merge_text_nodes( jsonml ) {
   angular.module('footballAPI').directive('gameGraph', function() {
     return {
       restrict: 'E',
-      templateUrl: './templates/graph-template.html',
+      templateUrl: './app/templates/graph-template.html',
       controller: 'GraphController',
       controllerAs: 'graphCtrl'
     };
@@ -2440,7 +2440,7 @@ function merge_text_nodes( jsonml ) {
     return {
       restrict: 'E',
       replace: true,
-      templateUrl: './templates/header-template.html',
+      templateUrl: './app/templates/header-template.html',
       controller: 'HeaderController',
       controllerAs: 'headerCtrl'
     };
@@ -2453,7 +2453,7 @@ function merge_text_nodes( jsonml ) {
     return {
       restrict: 'E',
       replace: true,
-      templateUrl: './templates/matches-template.html'
+      templateUrl: './app/templates/matches-template.html'
     };
   });
 
@@ -2464,7 +2464,7 @@ function merge_text_nodes( jsonml ) {
     return {
       restrict: 'E',
       replace: false,
-      templateUrl: './templates/rules-tab-content-template.html',
+      templateUrl: './app/templates/rules-tab-content-template.html',
       controller: 'RulesTabContentController',
       controllerAs: 'rulesTabCtrl'
     };

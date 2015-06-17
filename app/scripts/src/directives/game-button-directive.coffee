@@ -4,6 +4,6 @@ angular.module 'footballAPI'
 
     return {
         restrict: 'E'
-        templateUrl: './templates/game-button-template.html'
+        templateUrl: './app/templates/game-button-template.html'
     }
 )

@@ -4,7 +4,7 @@ angular.module 'footballAPI'
 
     return {
         restrict: 'E'
-        templateUrl: './templates/game-bar-display-template.html'
+        templateUrl: './app/templates/game-bar-display-template.html'
         scope: {
             description: '@'
         }

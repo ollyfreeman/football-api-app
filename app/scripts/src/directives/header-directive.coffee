@@ -5,7 +5,7 @@ angular.module 'footballAPI'
     return {
         restrict: 'E'
         replace: true
-        templateUrl: './templates/header-template.html'
+        templateUrl: './app/templates/header-template.html'
         controller: 'HeaderController'
         controllerAs: 'headerCtrl'
     }

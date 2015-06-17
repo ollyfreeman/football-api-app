@@ -4,7 +4,7 @@ angular.module 'footballAPI'
 
     return {
         restrict: 'E'
-        templateUrl: './templates/graph-template.html'
+        templateUrl: './app/templates/graph-template.html'
         controller: 'GraphController'
         controllerAs: 'graphCtrl'
     }

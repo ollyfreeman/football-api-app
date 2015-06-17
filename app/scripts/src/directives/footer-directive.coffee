@@ -5,6 +5,6 @@ angular.module 'footballAPI'
     return {
         restrict: 'E'
         replace: true
-        templateUrl: './templates/footer-template.html'
+        templateUrl: './app/templates/footer-template.html'
     }
 )
