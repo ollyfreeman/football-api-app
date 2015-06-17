@@ -1,11 +1,10 @@
-<h1 class='md-display-2'>RULES</h1>
 <div class='fapi-text-block'>
 
   <h3>Introduction</h3>
   <p>This game is designed to prototype a new gambling application that takes inspiration from
   classic British football 'Pools' betting. The final product would use live updates from
   <a ng-href='{{rulesTabCtrl.footballApiURL}}' target='_blank'>football-api.com</a>.
-  However, to make designing, testing and demonstrationg viable, it currently uses an API that was
+  However, to make designing, testing and demonstrating viable, it currently uses an API that was
   built to mock on-demand the live feed that would be received from
   <a href='{{rulesTabCtrl.footballApiURL}}' target='_blank'>football-api.com</a> (see the API tab).
   This mock on-demand API has the option of simulating the matches at a higher rate - this game uses that functionality,
@@ -14,11 +13,11 @@
   <h3>How to play</h3>
   <ol>
     <li>Predict the outcome of each of the matches: to predict that either of the teams will win,
-    you click on that teams name - to predict that the match will end in a draw, which is the default
+    you click on that team's name - to predict that the match will end in a draw, which is the default
     selection, you click the 'v' symbol.</li>
     <li>Click START.</li>
     <li>As the simulation proceeds, you can change your predictions. It is only your most recent prediction for
-    each match that counts towards your score - but note that the later in match that this prediction happens, the fewer
+    each match that counts towards your score - but note that the later in the match that this prediction happens, the fewer
     points you receive if your prediction is correct (see 'Scoring' below). The graph displays your current score,
     which will change as goals are scored and as you change you predictions. </li>
   </ol>

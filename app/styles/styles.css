@@ -16,6 +16,10 @@ game-score h3 {
     margin-top: 0;
 }
 
+h3, #fapi-game-button {
+    color: rgb(63,81,181);
+}
+
 .fapi-bottom-offset {
     height: 50px;
 }
@@ -37,7 +41,7 @@ game-score h3 {
 }
 
 .fapi-team-button {
-    width: 180px;
+    width: 220px;
     text-overflow: ellipsis;
 }
 
@@ -63,9 +67,34 @@ game-score h3 {
     min-width: 50px;
 }
 
+#fapi-banner {
+    color: white;
+    height: 400px;
+    background-image: url('../img/soccer-stadium.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.7);
+}
+
+#fapi-banner-text {
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 250px;
+    font-family: Roboto Slab, RobotoDraft, Roboto, 'Helvetica Neue', sans-serif;
+}
+
 #fapi-footer {
     min-height: 20px;
     padding-top: 4px;
+}
+
+h3, #fapi-game-button {
+    color: rgb(63,81,181);
+}
+
+#fapi-game-button {
+    font-size: 20px;
 }
 
 #fapi-graph {
@@ -75,6 +104,12 @@ game-score h3 {
 
 #fapi-github-icon, #fapi-linkedin-icon {
     margin-top: 10px;
+}
+
+@media only screen and (max-width: 1500px) {
+.fapi-team-button {
+    width: 180px;
+}
 }
 
 @media only screen and (max-width: 1200px) {
@@ -99,15 +134,28 @@ game-graph {
 
 @media only screen and (max-width: 1050px) {
 
-.fapi-game-subtitle, #fapi-game-button {
-    margin-left: 0;
+.fapi-team-button {
+    width: 150px;
 }
 }
 
 @media only screen and (max-width: 960px) {
 
-.fapi-team-button {
-    width: 150px;
+.fapi-game-subtitle, #fapi-game-button {
+    margin-left: auto;
+    margin-right: auto;
+}
+}
+
+@media only screen and (max-width: 700px) {
+
+#fapi-banner {
+    height: 300px;
+}
+
+#fapi-banner-text {
+    font-size: 48px;
+    line-height: 150px;
 }
 }
 
@@ -131,5 +179,17 @@ game-graph {
 
 p, li {
     font-size: 10px;
+}
+}
+
+@media only screen and (max-width: 500px) {
+
+#fapi-banner {
+    height: 200px;
+}
+
+#fapi-banner-text {
+    font-size: 32px;
+    line-height: 100px;
 }
 }

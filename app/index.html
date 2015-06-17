@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>FOOTBALL-API APP</title>
+  <title>GAME OF TWO HALVES</title>
 
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,14 +25,18 @@
   </md-toolbar>
 
   <!-- Main content -->
-  <md-content class="md-padding">
+  <md-content>
+    
+    <div id="fapi-banner">
+      <span id="fapi-banner-text">GAME OF TWO HALVES</span>
+      <h1>A prototype realtime football betting game</h1>
+    </div>
+
     <md-tabs md-dynamic-height md-border-bottom>
 
       <!-- GAME tab -->
       <md-tab label="GAME">
         <md-content class="md-padding" layout="column" ng-controller="GameController as gameCtrl">
-
-          <h1 class="md-display-2">GAME</h1>
 
           <game-matches></game-matches>
 
@@ -79,6 +83,7 @@
 
   <!-- Scripts -->
   <script type="text/javascript" src="./scripts/football-api-app.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
 
 </body>
 </html>
