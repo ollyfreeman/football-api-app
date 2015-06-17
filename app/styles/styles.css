@@ -147,7 +147,7 @@ game-graph {
 }
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 750px) {
 
 #fapi-banner {
     height: 300px;
@@ -157,16 +157,9 @@ game-graph {
     font-size: 48px;
     line-height: 150px;
 }
-}
 
-@media only screen and (max-width: 600px) {
-
-.fapi-team-button {
-    width: 150px;
-}
-
-.fapi-vs-button {
-    width: 25px;
+h1 {
+    font-size: 28px;
 }
 }
 
@@ -177,12 +170,9 @@ game-graph {
     font-size: 10px;
 }
 
-p, li {
-    font-size: 10px;
+.fapi-vs-button {
+    width: 25px;
 }
-}
-
-@media only screen and (max-width: 500px) {
 
 #fapi-banner {
     height: 200px;
@@ -191,5 +181,13 @@ p, li {
 #fapi-banner-text {
     font-size: 32px;
     line-height: 100px;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+p, li {
+    font-size: 10px;
 }
 }
