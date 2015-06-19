@@ -1,6 +1,7 @@
 node_modules/
 bower_components/
 app/scripts/lib/
+app/styles/lib/
 .DS_Store
 npm-debug.log
 TODO.txt
