@@ -1,0 +1,182 @@
+// Colours
+$primary-color: #3F51B5;
+$secondary-color: #FF4081;
+$tertiary-color-light: #EBEBEB;
+$tertiary-color-dark: #D4D4D4;
+
+// General styles
+game-bar-display, game-button, game-graph, game-score, .fapi-match-row {
+    margin: auto;
+}
+
+// Header
+.fapi-header-button {
+    min-width: 50px;
+    margin-top: 10px;
+}
+
+// Banner
+#fapi-banner {
+    color: white;
+    height: 400px;
+    background-image: url('../../img/soccer-stadium.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.7);
+    
+    @media only screen and (max-width: 750px) {
+        height: 300px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        height: 200px;
+    }
+}
+
+#fapi-banner-text {
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 250px;
+    font-family: Roboto Slab, RobotoDraft, Roboto, 'Helvetica Neue', sans-serif;
+    
+    @media only screen and (max-width: 750px) {
+        font-size: 48px;
+        line-height: 150px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        font-size: 32px;
+        line-height: 100px;
+    }
+}
+
+h1 {
+    @media only screen and (max-width: 750px) {
+        font-size: 28px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        font-size: 24px;
+    }
+}
+
+// Matches
+.fapi-team-button {
+    width: 220px;
+    text-overflow: ellipsis;
+    
+    @media only screen and (max-width: 1500px) {
+        width: 180px;
+    }
+
+    @media only screen and (max-width: 1050px) {
+        width: 150px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        width: 120px;
+        font-size: 10px;
+    }
+}
+
+// Game button
+#fapi-game-button {
+    color: $primary-color;
+    font-size: 20px;
+    margin-top: 20px;
+    @extend .fapi-game-subtitle;
+}
+
+// Graph
+game-graph {
+    background-image: url('../../img/graph-background-1090.png');
+    margin-top: 20px;
+
+    @media only screen and (max-width: 1200px) {
+        background-image: url('../../img/graph-background-880.png');
+    }
+}
+
+#fapi-graph {
+    width: 1090px;
+    height: 200px;
+
+    @media only screen and (max-width: 1200px) {
+        width: 880px;
+    }
+}
+
+.fapi-vs-button {
+    min-width: 50px;
+    @media only screen and (max-width: 600px) {
+        width: 25px;
+    }
+}
+
+// Game bars
+h3 {
+    color: $primary-color;
+    game-score & {
+        text-align: center;
+        margin-top: 0;
+    }
+}
+
+.fapi-tooltip {
+    width: 10px;
+    height: 10px;
+    background-color: $tertiary-color-light;
+
+    @media only screen and (max-width: 1200px) {
+        width: 8px;
+    }
+}
+
+.fapi-tooltip-halftime {
+    background-color: $tertiary-color-dark;
+}
+
+.fapi-event-occurred {
+    background-color: $secondary-color;
+}
+
+.fapi-game-subtitle {
+    margin-left: 35px;
+    
+    @media only screen and (max-width: 960px) {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.fapi-game-bar-offset {
+    width: 20px;
+
+    @media only screen and (max-width: 1200px) {    
+        width: 25px;
+    }
+}
+
+// Footer 
+.fapi-bottom-offset {
+    height: 50px;
+}
+
+#fapi-footer {
+    min-height: 20px;
+    padding-top: 4px;
+}
+
+
+// Rules and API tabs
+p, li {
+    @media only screen and (max-width: 600px) {
+        font-size: 10px;
+    }
+}
+
+.fapi-text-block {
+    margin: 0 10%;
+}
+

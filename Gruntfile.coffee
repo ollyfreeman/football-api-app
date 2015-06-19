@@ -62,6 +62,17 @@ module.exports = (grunt) ->
                 }
             }
         }
+
+        sass: {
+            options: {
+                outputStyle: 'expanded'
+            }
+            dist: {
+                files: {
+                    './app/styles/lib/main.css': './app/styles/src/main.scss'
+                }
+            }
+        }
     }
 
     grunt.loadNpmTasks('grunt-contrib-watch')
@@ -69,5 +80,6 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-coffee')
     grunt.loadNpmTasks('grunt-contrib-concat')
     grunt.loadNpmTasks('grunt-contrib-uglify')
+    grunt.loadNpmTasks('grunt-sass')
 
-    grunt.registerTask('default', ['coffeelint', 'coffee', 'concat'])
+    grunt.registerTask('default', ['coffeelint', 'coffee', 'concat', 'sass'])
