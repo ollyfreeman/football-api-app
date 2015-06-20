@@ -1,12 +1,10 @@
 angular.module 'footballAPI'
 
-.directive('rulesTabContent', () ->
+.directive 'rulesTabContent', ->
 
-    return {
+    rulesTabContentDirective =
         restrict: 'E'
         replace: false
         templateUrl: './app/templates/rules-tab-content-template.html'
         controller: 'RulesTabContentController'
         controllerAs: 'rulesTabCtrl'
-    }
-)

@@ -1,10 +1,8 @@
 angular.module 'footballAPI'
 
-.directive('gameMatches', () ->
+.directive 'gameMatches', ->
 
-    return {
+    gameMatchesDirective =
         restrict: 'E'
         replace: true
         templateUrl: './app/templates/matches-template.html'
-    }
-)

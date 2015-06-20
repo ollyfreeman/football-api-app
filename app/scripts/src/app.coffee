@@ -1,8 +1,9 @@
 angular.module 'footballAPI', ['chart.js', 'ngMaterial', 'ngSanitize']
 
-.config(['ChartJsProvider', (ChartJsProvider) ->
+.config ['ChartJsProvider', (ChartJsProvider) ->
+
     # configure all charts
-    ChartJsProvider.setOptions({
+    ChartJsProvider.setOptions
         colours: ['#3F51B5', '#FF4081']
         responsive: false
         showTooltips: false
@@ -12,11 +13,11 @@ angular.module 'footballAPI', ['chart.js', 'ngMaterial', 'ngSanitize']
         scaleStepWidth: 20
         scaleStartValue: 0
         scaleLabel: ' <%=value%>'
-    })
+
     # configure all line charts
-    ChartJsProvider.setOptions('Line', {
+    ChartJsProvider.setOptions 'Line',
         pointDot: false
         bezierCurve: false
-    })
+
     return
-])
+]

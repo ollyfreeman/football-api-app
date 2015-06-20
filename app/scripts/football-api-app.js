@@ -2357,7 +2357,8 @@ function merge_text_nodes( jsonml ) {
 ;
 (function() {
   angular.module('footballAPI').directive('apiTabContent', function() {
-    return {
+    var apiTabContentDirective;
+    return apiTabContentDirective = {
       restrict: 'E',
       replace: false,
       templateUrl: './app/templates/api-tab-content-template.html',
@@ -2370,7 +2371,8 @@ function merge_text_nodes( jsonml ) {
 ;
 (function() {
   angular.module('footballAPI').directive('appFooter', function() {
-    return {
+    var appFooterDirective;
+    return appFooterDirective = {
       restrict: 'E',
       replace: true,
       templateUrl: './app/templates/footer-template.html'
@@ -2382,7 +2384,8 @@ function merge_text_nodes( jsonml ) {
 (function() {
   angular.module('footballAPI').directive('gameBarDisplay', [
     'Labels', 'GlobalEvents', function(Labels, GlobalEvents) {
-      return {
+      var gameBarDisplayDirective;
+      return gameBarDisplayDirective = {
         restrict: 'E',
         templateUrl: './app/templates/game-bar-display-template.html',
         scope: {
@@ -2398,7 +2401,8 @@ function merge_text_nodes( jsonml ) {
 ;
 (function() {
   angular.module('footballAPI').directive('gameButton', function() {
-    return {
+    var gameButtonDirective;
+    return gameButtonDirective = {
       restrict: 'E',
       templateUrl: './app/templates/game-button-template.html'
     };
@@ -2409,7 +2413,8 @@ function merge_text_nodes( jsonml ) {
 (function() {
   angular.module('footballAPI').directive('gameScore', [
     'PlayerScore', function(PlayerScore) {
-      return {
+      var gameScoreDirective;
+      return gameScoreDirective = {
         restrict: 'E',
         templateUrl: './app/templates/game-score-template.html',
         controller: function() {
@@ -2425,7 +2430,8 @@ function merge_text_nodes( jsonml ) {
 ;
 (function() {
   angular.module('footballAPI').directive('gameGraph', function() {
-    return {
+    var gameGraphDirective;
+    return gameGraphDirective = {
       restrict: 'E',
       templateUrl: './app/templates/graph-template.html',
       controller: 'GraphController',
@@ -2437,7 +2443,8 @@ function merge_text_nodes( jsonml ) {
 ;
 (function() {
   angular.module('footballAPI').directive('appToolbar', function() {
-    return {
+    var appToolbarDirective;
+    return appToolbarDirective = {
       restrict: 'E',
       replace: true,
       templateUrl: './app/templates/header-template.html',
@@ -2450,7 +2457,8 @@ function merge_text_nodes( jsonml ) {
 ;
 (function() {
   angular.module('footballAPI').directive('gameMatches', function() {
-    return {
+    var gameMatchesDirective;
+    return gameMatchesDirective = {
       restrict: 'E',
       replace: true,
       templateUrl: './app/templates/matches-template.html'
@@ -2461,7 +2469,8 @@ function merge_text_nodes( jsonml ) {
 ;
 (function() {
   angular.module('footballAPI').directive('rulesTabContent', function() {
-    return {
+    var rulesTabContentDirective;
+    return rulesTabContentDirective = {
       restrict: 'E',
       replace: false,
       templateUrl: './app/templates/rules-tab-content-template.html',
@@ -2479,13 +2488,14 @@ function merge_text_nodes( jsonml ) {
       dataFormatter = {};
       dataFormatter.processRawMatch = function(rawMatch) {
         var formattedMatch;
-        formattedMatch = {};
-        formattedMatch.home_team = rawMatch.match_localteam_name;
-        formattedMatch.away_team = rawMatch.match_visitorteam_name;
-        formattedMatch.home_score = 0;
-        formattedMatch.away_score = 0;
-        formattedMatch.events = [];
-        formattedMatch.currentResult = [DATA.DRAW];
+        formattedMatch = {
+          home_team: rawMatch.match_localteam_name,
+          away_team: rawMatch.match_visitorteam_name,
+          home_score: 0,
+          away_score: 0,
+          events: [],
+          currentResult: [DATA.DRAW]
+        };
         return formattedMatch;
       };
       dataFormatter.processLiveData = function(dataTime, formattedMatches, globalEvents, rawData) {
@@ -2541,7 +2551,7 @@ function merge_text_nodes( jsonml ) {
           } else {
             offset = TIME.FIRSTHALF_START;
           }
-          return parseInt(rawMatch[DATA.MATCH_TIMER]) + offset;
+          return offset + parseInt(rawMatch[DATA.MATCH_TIMER]);
         }
       };
       isSecondHalf = function(rawMatch) {
@@ -2585,10 +2595,11 @@ function merge_text_nodes( jsonml ) {
   angular.module('footballAPI').factory('Data', [
     'DataFormatter', '$http', '$interval', '$q', '$timeout', 'TIME', 'URL', function(DataFormatter, $http, $interval, $q, $timeout, TIME, URL) {
       var dataService, executeAndNewInterval, stopFetching;
-      dataService = {};
-      dataService.time = TIME.INITIAL_TIME;
-      dataService.matches = [];
-      dataService.globalEvents = [];
+      dataService = {
+        time: TIME.INITIAL_TIME,
+        matches: [],
+        globalEvents: []
+      };
       dataService.initialise = function() {
         return $q(function(resolve, reject) {
           return $http.get(URL.GET_INITIAL_MATCH_INFO).success(function(data, status) {
@@ -2649,17 +2660,18 @@ function merge_text_nodes( jsonml ) {
   angular.module('footballAPI').factory('GlobalEvents', [
     'Data', 'DATA', 'TIME', function(Data, DATA, TIME) {
       var eventsService, initaliseGlobalEvents;
-      eventsService = {};
-      eventsService.globalEvents = [];
-      eventsService.eventTooltips = {
-        list: (function() {
-          var i, ref, ref1, results;
-          results = [];
-          for (i = ref = TIME.FIRSTHALF_START, ref1 = TIME.SECONDHALF_END; ref <= ref1 ? i <= ref1 : i >= ref1; ref <= ref1 ? i++ : i--) {
-            results.push(null);
-          }
-          return results;
-        })()
+      eventsService = {
+        globalEvents: [],
+        eventTooltips: {
+          list: (function() {
+            var i, ref, ref1, results;
+            results = [];
+            for (i = ref = TIME.FIRSTHALF_START, ref1 = TIME.SECONDHALF_END; ref <= ref1 ? i <= ref1 : i >= ref1; ref <= ref1 ? i++ : i--) {
+              results.push(null);
+            }
+            return results;
+          })()
+        }
       };
       eventsService.initialise = function() {
         return initaliseGlobalEvents();
@@ -2693,9 +2705,10 @@ function merge_text_nodes( jsonml ) {
   angular.module('footballAPI').factory('Graph', [
     'Labels', 'PlayerScore', function(Labels, PlayerScore) {
       var graphService;
-      graphService = {};
-      graphService.data = [];
-      graphService.labels = Labels.graphLabels;
+      graphService = {
+        data: [],
+        labels: Labels.graphLabels
+      };
       graphService.initialise = function() {
         return graphService.data.push(PlayerScore.playerScore);
       };
@@ -2724,13 +2737,13 @@ function merge_text_nodes( jsonml ) {
         labelService.graphLabels[i] = (i - (TIME.SECONDHALF_START - TIME.FIRSTHALF_END)) + " SH";
       }
       labelService.tooltipLabels = [];
-      for (i = n = ref11 = TIME.FIRSTHALF_START, ref12 = TIME.FIRSTHALF_END; n <= ref12; i = n += 1) {
+      for (i = n = ref11 = TIME.FIRSTHALF_START, ref12 = TIME.FIRSTHALF_END; ref11 <= ref12 ? n <= ref12 : n >= ref12; i = ref11 <= ref12 ? ++n : --n) {
         labelService.tooltipLabels[i] = i + " FH";
       }
-      for (i = o = ref13 = TIME.HALFTIME_START, ref14 = TIME.HALFTIME_END; o <= ref14; i = o += 1) {
+      for (i = o = ref13 = TIME.HALFTIME_START, ref14 = TIME.HALFTIME_END; ref13 <= ref14 ? o <= ref14 : o >= ref14; i = ref13 <= ref14 ? ++o : --o) {
         labelService.tooltipLabels[i] = (i - TIME.HALFTIME_START) + " HT";
       }
-      for (i = p = ref15 = TIME.SECONDHALF_START, ref16 = TIME.SECONDHALF_END; p <= ref16; i = p += 1) {
+      for (i = p = ref15 = TIME.SECONDHALF_START, ref16 = TIME.SECONDHALF_END; ref15 <= ref16 ? p <= ref16 : p >= ref16; i = ref15 <= ref16 ? ++p : --p) {
         labelService.tooltipLabels[i] = (i - (TIME.SECONDHALF_START - TIME.FIRSTHALF_END)) + " SH";
       }
       return labelService;
@@ -2743,10 +2756,12 @@ function merge_text_nodes( jsonml ) {
   angular.module('footballAPI').factory('PlayerScore', [
     'Data', 'Prediction', 'TIME', function(Data, Prediction, TIME) {
       var playerScoreService;
-      playerScoreService = {};
-      playerScoreService.playerScore = [];
-      playerScoreService.currentPlayerScore = {};
-      playerScoreService.currentPlayerScore.value = 0;
+      playerScoreService = {
+        playerScore: [],
+        currentPlayerScore: {
+          value: 0
+        }
+      };
       playerScoreService.initialise = function() {
         return playerScoreService.playerScore = (function() {
           var j, ref, ref1, results;
@@ -2783,17 +2798,18 @@ function merge_text_nodes( jsonml ) {
   angular.module('footballAPI').factory('Prediction', [
     'Data', 'DATA', 'TIME', function(Data, DATA, TIME) {
       var addPredictionTooltip, initialisePredictionTooltips, initialisePredictions, predictionService;
-      predictionService = {};
-      predictionService.predictions = [];
-      predictionService.predictionTooltips = {
-        list: (function() {
-          var j, ref, ref1, results;
-          results = [];
-          for (j = ref = TIME.FIRSTHALF_START, ref1 = TIME.SECONDHALF_END; ref <= ref1 ? j <= ref1 : j >= ref1; ref <= ref1 ? j++ : j--) {
-            results.push(null);
-          }
-          return results;
-        })()
+      predictionService = {
+        predictions: [],
+        predictionTooltips: {
+          list: (function() {
+            var j, ref, ref1, results;
+            results = [];
+            for (j = ref = TIME.FIRSTHALF_START, ref1 = TIME.SECONDHALF_END; ref <= ref1 ? j <= ref1 : j >= ref1; ref <= ref1 ? j++ : j--) {
+              results.push(null);
+            }
+            return results;
+          })()
+        }
       };
       predictionService.initialise = function() {
         var numberOfMatches;

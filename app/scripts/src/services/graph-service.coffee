@@ -1,14 +1,13 @@
 angular.module 'footballAPI'
 
-.factory('Graph', [ 'Labels', 'PlayerScore', (Labels, PlayerScore) ->
+.factory 'Graph', [ 'Labels', 'PlayerScore', (Labels, PlayerScore) ->
 
-    graphService = {}
+    graphService =
+        data: []
+        labels: Labels.graphLabels
 
-    graphService.data = []
-    graphService.labels = Labels.graphLabels
-
-    graphService.initialise = () ->
-        graphService.data.push(PlayerScore.playerScore)
+    graphService.initialise = ->
+        graphService.data.push PlayerScore.playerScore
 
     return graphService
-])
+]

@@ -1,18 +1,16 @@
 angular.module 'footballAPI'
 
-.constant 'BUTTON', {
+.constant 'BUTTON',
     PRE_START: 'GETTING MATCH INFORMATION'
     START: 'START'
     FINISHED: 'GAME FINISHED'
     ERROR_START: 'UNABLE TO FETCH MATCH INFORMATION - TRY LATER'
     ERROR_GAME: 'SIMULATION CANCELLED - UNABLE TO FETCH MATCH INFORMATION'
-}
 
-.constant 'CONFIG', {
+.constant 'CONFIG',
     MATCH_SPEED: 60
-}
 
-.constant 'DATA', {
+.constant 'DATA',
     HOME_WIN: 'home win'
     DRAW: 'draw'
     AWAY_WIN: 'away win'
@@ -38,13 +36,11 @@ angular.module 'footballAPI'
     EVENT_TIME: 'event_minute'
     EVENT_TEAM: 'event_team'
     EVENT_RESULT: 'event_result'
-}
 
-.constant 'GRAPH', {
+.constant 'GRAPH',
     LABEL_GAP: 5
-}
 
-.constant 'TIME', {
+.constant 'TIME',
     INITAL_TIME: -1
     FIRSTHALF_START: 0
     FIRSTHALF_END: 45
@@ -53,9 +49,8 @@ angular.module 'footballAPI'
     SECONDHALF_START: 61
     SECONDHALF_END: 106
     SIXTY_SECONDS : 60000
-}
 
-.constant 'URL', {
+.constant 'URL',
     GET_INITIAL_MATCH_INFO: 'http://104.236.187.56/api/?Action=matches'
     START_SIMULATON_PREFIX: 'http://104.236.187.56/api/?Action=start&matchspeed='
     GET_SIMULATON_UPDATE_PREFIX: 'http://104.236.187.56/api/?Action=today&tokenId='
@@ -64,5 +59,4 @@ angular.module 'footballAPI'
     GITHUB_APP: 'https://github.com/ollyfreeman/football-api-app'
     LINKEDIN: 'https://www.linkedin.com/profile/view?id=217892821'
     FOOTBALL_API: 'http://www.football-api.com'
-}
 

@@ -13,6 +13,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="./bower_components/angular-chart.js/dist/angular-chart.css">
   <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css">
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="./app/styles/lib/main.css">
 
 </head>
@@ -26,7 +27,7 @@
 
   <!-- Main content -->
   <md-content>
-    
+
     <div id="fapi-banner">
       <span id="fapi-banner-text">GAME OF TWO HALVES</span>
       <h1>A prototype realtime football betting game</h1>
@@ -82,8 +83,44 @@
   </md-toolbar>
 
   <!-- Scripts -->
-  <script type="text/javascript" src="./app/scripts/football-api-app.js"></script>
-  <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
+  <script src='./bower_components/angular/angular.min.js'></script>
+  <script src='./bower_components/Chart.js/Chart.min.js'></script>
+  <script src='./bower_components/angular-aria/angular-aria.min.js'></script>
+  <script src='./bower_components/angular-animate/angular-animate.min.js'></script>
+  <script src='./bower_components/angular-chart.js/dist/angular-chart.min.js'></script>
+  <script src='./bower_components/angular-material/angular-material.min.js'></script>
+  <script src='./bower_components/angular-sanitize/angular-sanitize.min.js'></script>
+
+  <script src='./vendors/markdown.js'></script>
+
+  <script type='text/javascript' src='./app/scripts/lib/app.js'></script>
+
+  <script type='text/javascript' src='./app/scripts/lib/controllers/api-tab-content-controller.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/controllers/game-controller.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/controllers/header-controller.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/controllers/game-bar-display-controller.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/controllers/graph-controller.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/controllers/rules-tab-content-controller.js'></script>
+
+  <script type='text/javascript' src='./app/scripts/lib/directives/api-tab-content-directive.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/directives/footer-directive.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/directives/game-bar-display-directive.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/directives/game-button-directive.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/directives/game-score-directive.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/directives/graph-directive.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/directives/header-directive.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/directives/matches-directive.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/directives/rules-tab-content-directive.js'></script>
+
+  <script type='text/javascript' src='./app/scripts/lib/services/data-formatter-service.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/services/data-service.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/services/global-events-service.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/services/graph-service.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/services/label-service.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/services/player-score-service.js'></script>
+  <script type='text/javascript' src='./app/scripts/lib/services/prediction-service.js'></script>
+
+  <script type='text/javascript' src='./app/scripts/lib/constants/constants.js'></script>
 
 </body>
 </html>

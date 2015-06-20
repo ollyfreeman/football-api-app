@@ -1,11 +1,9 @@
 angular.module 'footballAPI'
 
-.directive('gameGraph', () ->
+.directive 'gameGraph', ->
 
-    return {
+    gameGraphDirective =
         restrict: 'E'
         templateUrl: './app/templates/graph-template.html'
         controller: 'GraphController'
         controllerAs: 'graphCtrl'
-    }
-)

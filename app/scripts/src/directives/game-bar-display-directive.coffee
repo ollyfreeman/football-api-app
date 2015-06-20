@@ -1,14 +1,12 @@
 angular.module 'footballAPI'
 
-.directive('gameBarDisplay', [ 'Labels', 'GlobalEvents', (Labels, GlobalEvents) ->
+.directive 'gameBarDisplay', [ 'Labels', 'GlobalEvents', (Labels, GlobalEvents) ->
 
-    return {
+    gameBarDisplayDirective =
         restrict: 'E'
         templateUrl: './app/templates/game-bar-display-template.html'
-        scope: {
+        scope:
             description: '@'
-        }
         controller: 'GameBarDisplayController'
         controllerAs: 'gameBarDisplayCtrl'
-    }
-])
+]

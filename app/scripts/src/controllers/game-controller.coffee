@@ -1,11 +1,11 @@
 angular.module 'footballAPI'
 
-.controller('GameController'\
+.controller 'GameController'\
 , [ 'Data', 'GlobalEvents', 'Graph', 'Labels', 'PlayerScore', 'Prediction'
 , '$interval', 'BUTTON', 'CONFIG', 'TIME'
 , (Data, GlobalEvents, Graph, Labels, PlayerScore, Prediction, $interval, BUTTON, CONFIG, TIME) ->
+    ctrl = @
 
-    ctrl = this
     ctrl.simulationTime = 0
     ctrl.matchSpeed = CONFIG.MATCH_SPEED
     ctrl.simulationReady = false
@@ -15,7 +15,7 @@ angular.module 'footballAPI'
     ctrl.predictions = Prediction.predictions
 
     # initialise the various services
-    Data.initialise().then () ->
+    Data.initialise().then ->
         Prediction.initialise()
         GlobalEvents.initialise()
         PlayerScore.initialise()
@@ -23,64 +23,64 @@ angular.module 'footballAPI'
 
         ctrl.simulationReady = true
         ctrl.buttonText = BUTTON.START
-    , () ->
+    , ->
         ctrl.simulationReady = false
         ctrl.buttonText = BUTTON.ERROR_START
 
     # start the simulation
-    ctrl.startSimulation = () ->
-        lengthOfSimulatedMinute = TIME.SIXTY_SECONDS/ctrl.matchSpeed
+    ctrl.startSimulation = ->
+        lengthOfSimulatedMinute = TIME.SIXTY_SECONDS / ctrl.matchSpeed
 
-        Data.startMatch(ctrl.matchSpeed).then () ->
+        Data.startMatch(ctrl.matchSpeed).then ->
             ctrl.simulationReady = false
-            ctrl.buttonText = getTimeLabel(ctrl.simulationTime)
+            ctrl.buttonText = getTimeLabel ctrl.simulationTime
 
             # execute once per simulated minute
-            intervalId = newInterval(lengthOfSimulatedMinute, () ->
+            intervalId = newInterval lengthOfSimulatedMinute, ->
 
                 # finish the simulation if full time is reached
-                finishSimulation(intervalId) if ctrl.simulationTime >= TIME.SECONDHALF_END
+                finishSimulation intervalId if ctrl.simulationTime >= TIME.SECONDHALF_END
 
                 # TODO: go onto 1 second poll if we are ahead of the server
 
                 # extra formatting that requires knowledge of simulation time
-                Data.formatCurrentResults(ctrl.simulationTime)
+                Data.formatCurrentResults ctrl.simulationTime
 
                 # store prediction for this minute
-                Prediction.recordPrediction(ctrl.simulationTime)
+                Prediction.recordPrediction ctrl.simulationTime
 
                 # Create the tooltip for any events that occured
-                GlobalEvents.addEventTooltip(ctrl.simulationTime)
+                GlobalEvents.addEventTooltip ctrl.simulationTime
 
                 # calculate the playerScore
-                PlayerScore.calculatePlayerScore(ctrl.simulationTime)
+                PlayerScore.calculatePlayerScore ctrl.simulationTime
 
                 # increase the simulation time
                 ctrl.simulationTime += 1
 
-                ctrl.buttonText = getTimeLabel(ctrl.simulationTime)
-            )
-        , () ->
+                ctrl.buttonText = getTimeLabel ctrl.simulationTime
+        , ->
             ctrl.simulationReady = false
             ctrl.buttonText = BUTTON.ERROR_GAME
 
     ctrl.changePrediction = (prediction, matchIndex) ->
-        Prediction.changePrediction(prediction,
+        Prediction.changePrediction prediction,
                                     Data.matches[matchIndex].home_team,
                                     Data.matches[matchIndex].away_team,
-                                    ctrl.simulationTime, matchIndex)
+                                    ctrl.simulationTime,
+                                    matchIndex
 
     # helper methods
     newInterval = (interval, callback) ->
-        return $interval(callback, interval)
+        return $interval callback, interval
 
     finishSimulation = (intervalId) ->
         ctrl.simulationReady = false
         ctrl.buttonText = BUTTON.FINISHED
-        $interval.cancel(intervalId)
+        $interval.cancel intervalId
 
     getTimeLabel = (time) ->
-        [mins, half] = (Labels.tooltipLabels[time]).split(' ')
+        [mins, half] = (Labels.tooltipLabels[time]).split ' '
         if half is 'FH'
             half = "First Half ('FH')"
         else if half is 'SH'
@@ -90,4 +90,4 @@ angular.module 'footballAPI'
         "#{mins} mins, #{half}"
 
     return ctrl
-])
+]

@@ -1,9 +1,7 @@
 angular.module 'footballAPI'
 
-.directive('gameButton', () ->
+.directive 'gameButton', ->
 
-    return {
+    gameButtonDirective =
         restrict: 'E'
         templateUrl: './app/templates/game-button-template.html'
-    }
-)

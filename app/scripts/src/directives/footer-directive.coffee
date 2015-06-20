@@ -1,10 +1,8 @@
 angular.module 'footballAPI'
 
-.directive('appFooter', () ->
+.directive 'appFooter', ->
 
-    return {
+    appFooterDirective =
         restrict: 'E'
         replace: true
         templateUrl: './app/templates/footer-template.html'
-    }
-)

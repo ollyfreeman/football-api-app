@@ -1,10 +1,9 @@
 angular.module 'footballAPI'
 
-.controller('GameBarDisplayController'\
+.controller 'GameBarDisplayController'\
 , [ 'Labels', 'GlobalEvents', 'Prediction', '$scope'
 , (Labels, GlobalEvents, Prediction, $scope) ->
-
-    ctrl = this
+    ctrl = @
 
     ctrl.barTitle = $scope.description
 
@@ -16,4 +15,4 @@ angular.module 'footballAPI'
     ctrl.tooltipLabels = Labels.tooltipLabels
 
     return ctrl
-])
+]
