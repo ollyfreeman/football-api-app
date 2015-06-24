@@ -4,7 +4,7 @@ angular.module 'footballAPI'
 
     gameBarDisplayDirective =
         restrict: 'E'
-        templateUrl: './app/templates/game-bar-display-template.html'
+        templateUrl: './html/templates/game-bar-display-template.html'
         scope:
             description: '@'
         controller: 'GameBarDisplayController'

@@ -5,4 +5,4 @@ angular.module 'footballAPI'
     gameMatchesDirective =
         restrict: 'E'
         replace: true
-        templateUrl: './app/templates/matches-template.html'
+        templateUrl: './html/templates/matches-template.html'

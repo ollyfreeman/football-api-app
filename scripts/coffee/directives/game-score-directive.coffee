@@ -4,7 +4,7 @@ angular.module 'footballAPI'
 
     gameScoreDirective =
         restrict: 'E'
-        templateUrl: './app/templates/game-score-template.html'
+        templateUrl: './html/templates/game-score-template.html'
         controller: () ->
             @playerScore = PlayerScore.currentPlayerScore
             return @

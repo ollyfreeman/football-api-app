@@ -4,4 +4,4 @@ angular.module 'footballAPI'
 
     gameButtonDirective =
         restrict: 'E'
-        templateUrl: './app/templates/game-button-template.html'
+        templateUrl: './html/templates/game-button-template.html'

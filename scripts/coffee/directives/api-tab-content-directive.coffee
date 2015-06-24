@@ -5,6 +5,6 @@ angular.module 'footballAPI'
     apiTabContentDirective =
         restrict: 'E'
         replace: false
-        templateUrl: './app/templates/api-tab-content-template.html'
+        templateUrl: './html/templates/api-tab-content-template.html'
         controller: 'ApiTabContentController'
         controllerAs: 'apiTabCtrl'

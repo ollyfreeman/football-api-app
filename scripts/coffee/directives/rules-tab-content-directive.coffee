@@ -5,6 +5,6 @@ angular.module 'footballAPI'
     rulesTabContentDirective =
         restrict: 'E'
         replace: false
-        templateUrl: './app/templates/rules-tab-content-template.html'
+        templateUrl: './html/templates/rules-tab-content-template.html'
         controller: 'RulesTabContentController'
         controllerAs: 'rulesTabCtrl'

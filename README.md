@@ -1,27 +1,40 @@
 football-api-app
 =================
 
-Web app using the football-api.com API
+Web app using the football-api.com API.
 
 ##Requirements
 
-`node`, `bower` and `http-server`.
+`npm` only.
 
 ##Setup
 
-Clone the repo, and install with `npm install` and then `bower install`.
+Clone the repo, and install with `npm install`.
 
 ##Lint and build
 
-Running `grunt` will lint, compile and concatenate all `.coffee` files in `app/scripts/src`.
+Running `npm run build` will lint and compile all `.coffee` and `.scss` files into `.js` and `.css` files,
+and copy `index.html` to the root level.
+
+In addition, if the `env` property in `package.json` is set to `production` (as opposed to `development`), the `.js`
+and `.css` files will then be concatenated and minified, and the imports in the root level `index.html`
+will be updated accordingly.
+
+##Watch
+
+Running `npm run watch` will run the appropriate `npm run build` tasks for the given environment whenever
+any of the `.coffee`, `.scss`, `.html` or image files are changed.
 
 ##Start webserver
 
-Start the web server with `npm start` - this will also run the grunt tasks.
+Start the web server with `npm start`.
+
+The advised development workflow is to have `npm run watch` running in one terminal session, and `npm start`
+running in another terminal session.
 
 ##Visit the webapp
 
-Go to `http://localhost:8000/app/index.html`.
+Go to `http://localhost:8000`.
 
 ##Known bugs
 

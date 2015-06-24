@@ -1,85 +1,105 @@
 module.exports = (grunt) ->
 
-    grunt.initConfig {
-        # to allow importing data from package.json
-        pkg: grunt.file.readJSON('package.json')
+    grunt.initConfig
 
-        watch: {
-          scripts: {
-            files: ['**/*.coffee', 'etc/**']
-            tasks: ['default']
-            options: {
-              spawn: true
-            }
-          }
-        }
+        pkg: grunt.file.readJSON 'package.json'
 
-        coffeelint: {
-            app: ['./app/scripts/src/**/*.coffee']
-            options: {
+        watch:
+            scripts:
+                files: [
+                    './scripts/coffee/**/*.coffee'
+                    './styles/scss/**/*.scss'
+                    './html/**/*.html'
+                    './img/*'
+                ]
+                tasks: ['default']
+                options:
+                    spawn: false
+
+        coffeelint:
+            app: ['./scripts/coffee/**/*.coffee']
+            options:
                 configFile: './coffeelint.json'
-            }
-        }
 
-        coffee: {
-            glob_to_multiple: {
+        coffee:
+            glob_to_multiple:
                 expand: true
                 flatten: false
-                cwd: 'app/scripts/src'
-                src: ['**/*.coffee']
-                dest: 'app/scripts/lib'
+                cwd: 'scripts/coffee'
+                src: ['./**/*.coffee']
+                dest: 'scripts/js'
                 ext: '.js'
-            }
-        }
 
-        concat: {
-            options: {
-                separator: ';\n'
-            },
-            dist: {
-                src: [
-                    './bower_components/angular/angular.min.js',
-                    './bower_components/Chart.js/Chart.min.js',
-                    './bower_components/angular-aria/angular-aria.min.js',
-                    './bower_components/angular-animate/angular-animate.min.js',
-                    './bower_components/angular-chart.js/dist/angular-chart.min.js',
-                    './bower_components/angular-material/angular-material.min.js',
-                    './bower_components/angular-sanitize/angular-sanitize.min.js',
-                    './vendors/markdown.js',
-                    './app/scripts/lib/**/*.js'
-                ],
-                dest: './app/scripts/football-api-app.js'
-            }
-        }
-
-        uglify: {
-            options: {
-                mangle: false
-            }
-            dist: {
-                files: {
-                    './app/scripts/football-api-app.min.js': ['./app/scripts/football-api-app.js']
-                }
-            }
-        }
-
-        sass: {
-            options: {
+        sass:
+            options:
                 outputStyle: 'expanded'
-            }
-            dist: {
-                files: {
-                    './app/styles/lib/main.css': './app/styles/src/main.scss'
-                }
-            }
-        }
-    }
+            dist:
+                files:
+                    './styles/css/main.css': './styles/scss/main.scss'
 
-    grunt.loadNpmTasks('grunt-contrib-watch')
-    grunt.loadNpmTasks('grunt-coffeelint')
-    grunt.loadNpmTasks('grunt-contrib-coffee')
-    grunt.loadNpmTasks('grunt-contrib-concat')
-    grunt.loadNpmTasks('grunt-contrib-uglify')
-    grunt.loadNpmTasks('grunt-sass')
+        copy:
+            generated:
+                src: './html/index.html'
+                dest: './index.html'
 
-    grunt.registerTask('default', ['coffeelint', 'coffee', 'concat', 'sass'])
+        useminPrepare:
+            html: './index.html'
+            options:
+                dest: './'
+
+        cssmin :
+            options:
+                keepSpecialComments: 0
+
+        usemin:
+            html: ['./index.html']
+
+        clean:
+            tmp: ['./.tmp']
+            all: [
+                './scripts/js'
+                './scripts/dist'
+                './styles/css'
+                './styles/dist'
+                './index.html'
+                './.tmp'
+            ]
+
+
+    grunt.loadNpmTasks 'grunt-contrib-watch'
+    grunt.loadNpmTasks 'grunt-coffeelint'
+    grunt.loadNpmTasks 'grunt-contrib-coffee'
+    grunt.loadNpmTasks 'grunt-sass'
+    grunt.loadNpmTasks 'grunt-contrib-copy'
+    grunt.loadNpmTasks 'grunt-usemin'
+    grunt.loadNpmTasks 'grunt-contrib-concat'
+    grunt.loadNpmTasks 'grunt-contrib-uglify'
+    grunt.loadNpmTasks 'grunt-contrib-cssmin'
+    grunt.loadNpmTasks 'grunt-contrib-clean'
+
+
+    # register grunt tasks according to environment variable
+    environment = grunt.config.data.pkg.env or process.env.GRUNT_ENV or 'development'
+    if environment is 'development'
+        grunt.registerTask 'default', [
+            'coffeelint'
+            'coffee'
+            'sass'
+            'copy'
+        ]
+    else if environment is 'production'
+        grunt.registerTask 'default', [
+            'coffeelint'
+            'coffee'
+            'sass'
+            'copy'
+            'useminPrepare'
+            'concat'
+            'uglify'
+            'cssmin'
+            'usemin'
+            'clean:tmp'
+        ]
+    else
+        console.log "environment variable '#{environment}' is not valid - no grunt tasks were run\n"
+        grunt.registerTask 'default', []

@@ -12,7 +12,7 @@ angular.module 'footballAPI'
         # decode the content attribute of the response
         content = atob data.content
         # convert from markdown to html
-        content = markdown.toHTML content
+        content = marked content
 
         ctrl.content = $sce.trustAsHtml content
     .error (data, status) ->

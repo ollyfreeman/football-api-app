@@ -4,6 +4,6 @@ angular.module 'footballAPI'
 
     gameGraphDirective =
         restrict: 'E'
-        templateUrl: './app/templates/graph-template.html'
+        templateUrl: './html/templates/graph-template.html'
         controller: 'GraphController'
         controllerAs: 'graphCtrl'

@@ -5,4 +5,4 @@ angular.module 'footballAPI'
     appFooterDirective =
         restrict: 'E'
         replace: true
-        templateUrl: './app/templates/footer-template.html'
+        templateUrl: './html/templates/footer-template.html'
