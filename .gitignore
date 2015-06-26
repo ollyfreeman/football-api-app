@@ -5,7 +5,6 @@ scripts/coffee/
 styles/css/
 styles/scss/
 etc/githooks/
-index.html
 .DS_Store
 npm-debug.log
 TODO.txt
