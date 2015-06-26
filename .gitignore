@@ -4,6 +4,7 @@ scripts/js/
 scripts/dist/
 styles/css/
 styles/dist/
+etc/githooks/
 index.html
 .DS_Store
 npm-debug.log

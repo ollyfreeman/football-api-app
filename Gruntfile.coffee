@@ -5,21 +5,37 @@ module.exports = (grunt) ->
         pkg: grunt.file.readJSON 'package.json'
 
         watch:
-            scripts:
+            dev:
                 files: [
                     './scripts/coffee/**/*.coffee'
                     './styles/scss/**/*.scss'
                     './html/**/*.html'
                     './img/*'
                 ]
-                tasks: ['default']
+                tasks: ['build:development']
                 options:
                     spawn: false
+            prod:
+                files: [
+                    './scripts/coffee/**/*.coffee'
+                    './styles/scss/**/*.scss'
+                    './html/**/*.html'
+                    './img/*'
+                ]
+                tasks: ['build:production']
+                options:
+                    spawn: false
+
+        githooks:
+            all:
+                'pre-commit' : 'npm run build'
+            options:
+                template : './etc/githooks/pre-commit.js'
 
         coffeelint:
             app: ['./scripts/coffee/**/*.coffee']
             options:
-                configFile: './coffeelint.json'
+                configFile: './etc/coffeelint.json'
 
         coffee:
             glob_to_multiple:
@@ -61,12 +77,14 @@ module.exports = (grunt) ->
                 './scripts/dist'
                 './styles/css'
                 './styles/dist'
+                './etc/githooks/js'
                 './index.html'
                 './.tmp'
             ]
 
-
     grunt.loadNpmTasks 'grunt-contrib-watch'
+    grunt.loadNpmTasks 'grunt-githooks'
+
     grunt.loadNpmTasks 'grunt-coffeelint'
     grunt.loadNpmTasks 'grunt-contrib-coffee'
     grunt.loadNpmTasks 'grunt-sass'
@@ -77,29 +95,22 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks 'grunt-contrib-cssmin'
     grunt.loadNpmTasks 'grunt-contrib-clean'
 
+    grunt.registerTask 'build:development', [
+        'coffeelint'
+        'coffee'
+        'sass'
+        'copy'
+    ]
 
-    # register grunt tasks according to environment variable
-    environment = grunt.config.data.pkg.env or process.env.GRUNT_ENV or 'development'
-    if environment is 'development'
-        grunt.registerTask 'default', [
-            'coffeelint'
-            'coffee'
-            'sass'
-            'copy'
-        ]
-    else if environment is 'production'
-        grunt.registerTask 'default', [
-            'coffeelint'
-            'coffee'
-            'sass'
-            'copy'
-            'useminPrepare'
-            'concat'
-            'uglify'
-            'cssmin'
-            'usemin'
-            'clean:tmp'
-        ]
-    else
-        console.log "environment variable '#{environment}' is not valid - no grunt tasks were run\n"
-        grunt.registerTask 'default', []
+    grunt.registerTask 'build:production', [
+        'coffeelint'
+        'coffee'
+        'sass'
+        'copy'
+        'useminPrepare'
+        'concat'
+        'uglify'
+        'cssmin'
+        'usemin'
+        'clean:tmp'
+    ]
