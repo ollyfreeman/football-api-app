@@ -1,6 +1,11 @@
 node_modules/
 bower_components/
-app/scripts/lib/
+scripts/js/
+scripts/coffee/
+styles/css/
+styles/scss/
+etc/githooks/
+index.html
 .DS_Store
 npm-debug.log
 TODO.txt

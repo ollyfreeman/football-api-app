@@ -1,73 +1,116 @@
 module.exports = (grunt) ->
 
-    grunt.initConfig {
-        # to allow importing data from package.json
-        pkg: grunt.file.readJSON('package.json')
+    grunt.initConfig
 
-        watch: {
-          scripts: {
-            files: ['**/*.coffee', 'etc/**']
-            tasks: ['default']
-            options: {
-              spawn: true
-            }
-          }
-        }
+        pkg: grunt.file.readJSON 'package.json'
 
-        coffeelint: {
-            app: ['./app/scripts/src/**/*.coffee']
-            options: {
-                configFile: './coffeelint.json'
-            }
-        }
+        watch:
+            dev:
+                files: [
+                    './scripts/coffee/**/*.coffee'
+                    './styles/scss/**/*.scss'
+                    './html/**/*.html'
+                    './img/*'
+                ]
+                tasks: ['build:development']
+                options:
+                    spawn: false
+            prod:
+                files: [
+                    './scripts/coffee/**/*.coffee'
+                    './styles/scss/**/*.scss'
+                    './html/**/*.html'
+                    './img/*'
+                ]
+                tasks: ['build:production']
+                options:
+                    spawn: false
 
-        coffee: {
-            glob_to_multiple: {
+        githooks:
+            all:
+                'pre-commit' : 'npm run build'
+            options:
+                template : './etc/githooks/pre-commit.js'
+
+        coffeelint:
+            app: ['./scripts/coffee/**/*.coffee']
+            options:
+                configFile: './etc/coffeelint.json'
+
+        coffee:
+            glob_to_multiple:
                 expand: true
                 flatten: false
-                cwd: 'app/scripts/src'
-                src: ['**/*.coffee']
-                dest: 'app/scripts/lib'
+                cwd: 'scripts/coffee'
+                src: ['./**/*.coffee']
+                dest: 'scripts/js'
                 ext: '.js'
-            }
-        }
 
-        concat: {
-            options: {
-                separator: ';\n'
-            },
-            dist: {
-                src: [
-                    './bower_components/angular/angular.min.js',
-                    './bower_components/Chart.js/Chart.min.js',
-                    './bower_components/angular-aria/angular-aria.min.js',
-                    './bower_components/angular-animate/angular-animate.min.js',
-                    './bower_components/angular-chart.js/dist/angular-chart.min.js',
-                    './bower_components/angular-material/angular-material.min.js',
-                    './bower_components/angular-sanitize/angular-sanitize.min.js',
-                    './vendors/markdown.js',
-                    './app/scripts/lib/**/*.js'
-                ],
-                dest: './app/scripts/football-api-app.js'
-            }
-        }
+        sass:
+            options:
+                outputStyle: 'expanded'
+            dist:
+                files:
+                    './styles/css/main.css': './styles/scss/main.scss'
 
-        uglify: {
-            options: {
-                mangle: false
-            }
-            dist: {
-                files: {
-                    './app/scripts/football-api-app.min.js': ['./app/scripts/football-api-app.js']
-                }
-            }
-        }
-    }
+        copy:
+            generated:
+                src: './html/index.html'
+                dest: './index.html'
 
-    grunt.loadNpmTasks('grunt-contrib-watch')
-    grunt.loadNpmTasks('grunt-coffeelint')
-    grunt.loadNpmTasks('grunt-contrib-coffee')
-    grunt.loadNpmTasks('grunt-contrib-concat')
-    grunt.loadNpmTasks('grunt-contrib-uglify')
+        useminPrepare:
+            html: './index.html'
+            options:
+                dest: './'
 
-    grunt.registerTask('default', ['coffeelint', 'coffee', 'concat'])
+        cssmin :
+            options:
+                keepSpecialComments: 0
+
+        usemin:
+            html: ['./index.html']
+
+        clean:
+            tmp: ['./.tmp']
+            all: [
+                './scripts/js'
+                './scripts/dist'
+                './styles/css'
+                './styles/dist'
+                './etc/githooks/js'
+                './index.html'
+                './.tmp'
+            ]
+
+    grunt.loadNpmTasks 'grunt-contrib-watch'
+    grunt.loadNpmTasks 'grunt-githooks'
+
+    grunt.loadNpmTasks 'grunt-coffeelint'
+    grunt.loadNpmTasks 'grunt-contrib-coffee'
+    grunt.loadNpmTasks 'grunt-sass'
+    grunt.loadNpmTasks 'grunt-contrib-copy'
+    grunt.loadNpmTasks 'grunt-usemin'
+    grunt.loadNpmTasks 'grunt-contrib-concat'
+    grunt.loadNpmTasks 'grunt-contrib-uglify'
+    grunt.loadNpmTasks 'grunt-contrib-cssmin'
+    grunt.loadNpmTasks 'grunt-contrib-clean'
+
+    grunt.registerTask 'build:development', [
+        'coffeelint'
+        'coffee'
+        'sass'
+        'copy'
+    ]
+
+    grunt.registerTask 'build:production', [
+        'coffeelint'
+        'coffee'
+        'sass'
+        'copy'
+        'useminPrepare'
+        'concat'
+        'uglify'
+        'cssmin'
+        'usemin'
+        'clean:tmp'
+    ]
